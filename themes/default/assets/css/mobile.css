@@ -1,0 +1,44 @@
+@media(max-width: 768px){
+.slick-prev,.slick-next{ display: none !important; }
+.footer_bg .mb-50 { display: none; }
+.footer_bg h3{ font-size: 18px; }
+.footer_bg p{ font-size: 10px; line-height: 14px; }
+.theme-mobile-app-btn>span { display: table; margin-top: 8px; font-weight: normal; font-size: 6px; line-height: 10px; text-align: left; font-size: 7px; }
+.theme-mobile-app-btn{  padding: 2px 8px; height: 39px;width: 100%;display: flex;justify-content: center; }
+.theme-mobile-app-btn-list li{margin-bottom: 10px !important;display: block;}
+.menu-horizontal-wrapper-02 .form-icon-left .form-control { height: 35px; }
+.menu-horizontal-wrapper-02 .select2-container .select2-choice>.select2-chosen { font-size: 12px; padding-top: 12px; }
+.menu-horizontal-wrapper-02 .select2-container .select2-choice>.select2-chosen .row.mb-15 > [class*=col] { padding-bottom: 10px; }
+.menu-horizontal-wrapper-02 .chosen-single  { height: 40px; background: #ffffff !important; font-size: 12px; }
+.menu-horizontal-wrapper-02 .form-icon-left .form-control { font-size: 12px;height: 40px; }
+.menu-horizontal-wrapper-02 .form-icon-left .form-control { padding-left: 50px; padding-top: 7px; height: 40px; }
+.chosen-container-single .chosen-single div:after{content: " "}
+.theme-mobile-app-btn-list{text-align: center;}
+.container-fluid { width: 100%; padding-right: 5px; padding-left: 5px; }
+.container { width: 100%; padding-right: 15px; padding-left: 15px; }
+.menu-horizontal-wrapper-02 { padding: 0px; padding-top: 10px; }
+.menu-horizontal-02 ul li a { display: block; color: #000; text-transform: uppercase; font-size: 12px; line-height: 1; padding: 13px 14px; }
+.form-search-main-01 .custom-control-label { position: relative !important; padding: 0px !important; font-size: 11px !important; }
+.row.mb-20 > [class*=col] { padding-bottom: 5px !important; }
+.bootstrap-touchspin .input-group-btn-vertical .btn { font-size: 16px; color: #AAA; margin-top: -5px; }
+.form-search-main-01 .btn-primary { margin: 0px 0 0px; }
+.form-search-main-01 .form-inner .mb-10 { background: #f1f3f8; height: 60px; margin-bottom: 0px !important; padding: 25px; }
+.hero-form-inner { padding: 0px; }
+.hero-form-absolute ul.nav { white-space: nowrap; overflow-x: auto; display: block !important }
+ ul.nav li { display: inline-block; float: none; }
+.menu-horizontal-02 ul li.active a, .menu-horizontal-02 ul li a.active { margin-bottom: 0px !important; } 
+.bootstrap-touchspin .form-control { border-radius: 5px; border-radius: 0px !important; padding-left: 33px !important; }
+.menu-horizontal-02 ul li:not(:last-child) { margin-right: 3px; }
+
+.slick-hero-slider .bg-image {background: #fff !important; }
+[data-dark-overlay]:after, [data-white-overlay]:after { content: ''; position: unset !important; }
+.hero-form-inner { box-shadow: none !important; }
+.hero-form-absolute { position: unset !important; } 
+.slick-hero-slider { display: none !important }
+.header-main .header-top { background-color: #e9e9e9 !important; } 
+.slick-hero-slider-wrapper .btn { padding-bottom: 15px !important; }
+.section-title h2 { line-height: 1.25; font-size: 20px; }
+.section-title  { margin-bottom: 10px; }
+.featured { padding-top: 45px; background-color: #f2f6fb; padding-bottom: 0px; }
+
+}
