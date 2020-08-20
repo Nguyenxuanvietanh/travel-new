@@ -64,9 +64,8 @@
                                         <div role="tabpanel" class="tab-pane <?php if ($order == $module->order) {
                                             echo "active in show"; } ?>" id="pass" aria-labelledby="home-tab">
                                             <?php
-                                            // Search_Form($module->name,"hotels");
+                                            Search_Form($module->name,"hotels");
                                             ?>
-                                            dasdsd
                                         </div>
 
                                     <?php }

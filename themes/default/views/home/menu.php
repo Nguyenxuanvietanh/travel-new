@@ -17,9 +17,10 @@
     ?>
     <li>
         <a class="text-center <?=$module['link']?> <?php if($order == $module['order']){ echo "active"; }?>" data-name="<?=$module['link']?>"  href="<?=$href?>" target="<?=$target?>" <?=$data_toggle?>>
-         <?= ($module['slug'] == 'pass') ? $module['name'] : lang($module['name'])?>
+         <?=  $module['slug'] == 'pass' ? $module['name']  : lang($module['name']) ?>
         </a>
     </li>
+
 <?php
 }?>
 <!--

@@ -132,12 +132,11 @@ class MX_Controller
                     array_push($modulesname, $namestore);
                 }
             }
-
             if ($module->ia_active == 1 && $module->parent_id == 'pass') {
                 if ($module->name == 'Pass') {
                     $modulename = $module->name;
                     array_push($ordernumber, $module->order);
-                    $namestore = array('link' => 'pass', 'foldername' => 'pass', 'name' => 'pass', 'order' => $module->order, 'slug' => $module->slug, 'module_name' => $modulename);
+                    $namestore = array('link' => 'pass', 'foldername' => 'pass', 'name' => 'Pass', 'order' => $module->order, 'slug' => $module->slug, 'module_name' => $modulename);
                     array_push($modulesname, $namestore);
                 }
             }
