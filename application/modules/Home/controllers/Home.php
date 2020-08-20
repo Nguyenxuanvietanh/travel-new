@@ -191,8 +191,10 @@ class Home extends MX_Controller {
                     $this->load->helper("Tours/tours_front");
                     $this->load->model('Tours/Tours_model');
                 }
-
-
+                if (isModuleActive('pass')){
+                    $this->load->library('Pass/Pass_lib');
+                    $this->data['moduleTypes'] = $this->Pass_lib->passTypes();
+                }
                 if (isModuleActive('rentals')) {
                     $activeModules[] = "rentals";
 
