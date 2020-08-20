@@ -142,29 +142,6 @@
       <?php if($appModule != "ean" && $appModule != "hotels" && $appModule != "boats" && $appModule != "cars"){ ?>
       <?php if($appModule == "offers"); {?>
       <?php foreach($module as $item){ ?>
-      <div class="col-md-6 owl-item go-right" style="margin-bottom: 25px;">
-        <a href="<?php echo $detail_url?>">
-          <div class="imgLodBg loader">
-            <div class="load"></div>
-            <img style="width:100%" data-wow-duration="0.2s" data-wow-delay="1s" class="wow fadeIn" src="?php echo base_url(); ?>/uploads/images/boats/slider/thumbs/437667_02-Big-Sky-bird-view.jpg">
-          </div>
-        </a>
-        <h4 class="ellipsis bold mb0 go-right RTL"><?php echo character_limiter($item->title,20);?></h4>
-        <div class="clearfix"></div>
-        <p class="tr RTL">
-          <?php echo character_limiter($item->desc,100);?> &nbsp;
-        </p>
-        <a class="btn btn-primary go-right loader" href="<?php echo $detail_url?>">
-        <?php echo trans( '0286');?>
-        </a>
-        <?php  if($item->price > 0){ ?>
-        <div class="text-success fs18 text-left go-text-right go-right" style="position: absolute; top: 120px; color: white; padding: 10px; background: #e94b28;">
-          <b>
-          <small><?php echo $item->currCode;?></small> <?php echo $item->currSymbol; ?><?php echo $item->price;?>
-          </b>
-        </div>
-        <?php } ?>
-      </div>
       <?php } ?>
       <?php } ?>
       <?php } ?>
