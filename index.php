@@ -14,7 +14,8 @@
 // ******************************************************************************/
 
 // Software Enviroment
-define('ENVIRONMENT', 'production');
+
+define('ENVIRONMENT', 'development');
 
 // page loading function
 // if (ob_get_level() == 0) ob_start(); include "load.php"; ob_end_clean();
