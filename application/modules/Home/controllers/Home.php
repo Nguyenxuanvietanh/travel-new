@@ -132,18 +132,6 @@ class Home extends MX_Controller {
             if ($pageslug == null || $pageslug == "home" || $this->validlang && empty($secondslug)) {
                 $this->load->model('Admin/Special_offers_model');
                 $activeModules = array();
-
-//            foreach ($this->data['modulesname'] as $modules)
-//            {
-//                if($modules["foldername"] == "flights")
-//                {
-//                    $this->load->model($modules["module_name"].'/SearchModel');
-//                    $searchmodel = new SearchModel();
-//                    $this->data['search'] = $searchmodel;
-//                }
-//
-//            }
-
                 if (isModuleActive('hotels')) {
                     $activeModules[] = "hotels";
                     $this->load->library('Hotels/Hotels_lib');
@@ -191,8 +179,10 @@ class Home extends MX_Controller {
                     $this->load->helper("Tours/tours_front");
                     $this->load->model('Tours/Tours_model');
                 }
-
-
+                if (isModuleActive('pass')){
+                    $this->load->library('Pass/Pass_lib');
+                    $this->data['moduleTypes'] = $this->Pass_lib->passTypes();
+                }
                 if (isModuleActive('rentals')) {
                     $activeModules[] = "rentals";
 

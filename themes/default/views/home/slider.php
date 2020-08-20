@@ -59,15 +59,12 @@
                             <div class="tab-content">
 
                                 <?php  foreach ($modulesList as $index => $module) {
-                                    if ($module->ia_active == 1 && $module->parent_id == 'pass') { ?>
-                                        <!-- Hotels  -->
+                                    if (isModuleActive('pass')) { ?>
+                                        <!-- Pass -->
                                         <div role="tabpanel" class="tab-pane <?php if ($order == $module->order) {
                                             echo "active in show"; } ?>" id="pass" aria-labelledby="home-tab">
-                                            <?php
-                                            Search_Form($module->name,"hotels");
-                                            ?>
+                                            <?php echo searchForm('pass', $data); ?>
                                         </div>
-
                                     <?php }
                                     if ($module->ia_active == 1 && $module->parent_id == 'hotels') { ?>
                                         <!-- Hotels  -->
