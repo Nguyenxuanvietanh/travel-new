@@ -49,6 +49,52 @@
                         </div>
                     </div>
                 </div>
+                <div class="col-lg-3 col-xs-12">
+                    <div class="col-inner">
+                        <div class="row gap-10 mb-15">
+                            <div class="col-12">
+                                <div class="form-group">
+                                    <label for="room-amount">Types</label>
+                                    <div class="clear"></div>
+                                    <div class="form-icon-left">
+                                        <span class="icon-font text-muted"><i class="bx bx-calendar"></i></span>
+                                        <select class="chosen-the-basic form-control" name="type" id="tourtype">
+                                            <option value="0" selected>National</option>
+                                            <option value="1" selected>International</option>
+                                        </select>
+                                        <select class="ichosen-the-basic form-control" name="category_id" id="category_id">
+                                            <option value="" selected>
+                                                <?php echo trans('0158'); ?>
+                                            </option>
+                                            <?php foreach ($data['moduleTypes'] as $ttype) { ?>
+                                                <option value="<?php echo $ttype->id; ?>">
+                                                    <?php echo $ttype->name; ?>
+                                                </option>
+                                            <?php } ?>
+                                        </select>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-2 col-xs-12">
+                    <div class="row">
+                        <!--<label class="hidden-xs go-right"><?php echo trans('0222'); ?> </label>-->
+                        <div class="clearfix"></div>
+                        <i class="iconspane-lg icon_set_1_icon-8"></i>
+                        <select class="input-lg form selectx" name="category_id" id="category_id">
+                            <option value="" selected>
+                                <?php echo trans('0158'); ?>
+                            </option>
+                            <?php foreach ($data['moduleTypes'] as $ttype) { ?>
+                                <option value="<?php echo $ttype->id; ?>" <?php makeSelected($pass_category, $ttype->id); ?> >
+                                    <?php echo $ttype->name; ?>
+                                </option>
+                            <?php } ?>
+                        </select>
+                    </div>
+                </div>
                 <div class="col-lg-2 col-xs-12">
                     <input type="hidden" name="module_type"/>
                     <input type="hidden" name="slug"/>
@@ -73,7 +119,6 @@
             console.log($(this).attr('action') + create_slug(values));
             window.location.href = $(this).attr('action') + create_slug(values);
         });
-
         function create_slug(data) {
             let p_1 = data['name'];
             p_1 = (p_1) ? p_1 : "null";
@@ -81,11 +126,10 @@
             p_3 = (p_3) ? p_3 : 0;
             let p_4 = data['type'];
             p_4 = (p_4) ? p_4 : 0;
+            let p_5 = data['category_id'];
+            p_5 = (p_5) ? p_5 : "null";
             let url = "";
-            if (p_1 !== "null") {
-                url += "/" + p_1;
-            }
-            return url + "/" + p_1 + "/" + p_3 + "/" + p_4 +;
+            return url + "/" + p_1 + "/" + p_3 + "/" + p_4 +"/" + p_5 +;
         }
     });
 </script>
