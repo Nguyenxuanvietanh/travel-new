@@ -54,15 +54,11 @@
                         <div class="row gap-10 mb-15">
                             <div class="col-12">
                                 <div class="form-group">
-                                    <label for="room-amount">Types</label>
+                                    <label for="room-amount">Category</label>
                                     <div class="clear"></div>
                                     <div class="form-icon-left">
                                         <span class="icon-font text-muted"><i class="bx bx-calendar"></i></span>
-                                        <select class="chosen-the-basic form-control" name="type" id="tourtype">
-                                            <option value="0" selected>National</option>
-                                            <option value="1" selected>International</option>
-                                        </select>
-                                        <select class="ichosen-the-basic form-control" name="category_id" id="category_id">
+                                        <select class="chosen-the-basic form-control" name="category_id" id="category_id">
                                             <option value="" selected>
                                                 <?php echo trans('0158'); ?>
                                             </option>
@@ -88,7 +84,7 @@
                                 <?php echo trans('0158'); ?>
                             </option>
                             <?php foreach ($data['moduleTypes'] as $ttype) { ?>
-                                <option value="<?php echo $ttype->id; ?>" <?php makeSelected($pass_category, $ttype->id); ?> >
+                                <option value="<?php echo $ttype->id; ?>">
                                     <?php echo $ttype->name; ?>
                                 </option>
                             <?php } ?>
@@ -134,5 +130,5 @@
     });
 </script>
 <!------------------------------------------------------------------->
-<!-- ********************    TOURS MODULE    ********************  -->
+<!-- ********************    Pass MODULE    ********************  -->
 <!------------------------------------------------------------------->

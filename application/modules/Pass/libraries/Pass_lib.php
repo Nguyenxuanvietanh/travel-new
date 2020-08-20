@@ -262,6 +262,7 @@ class Pass_lib {
         $passTypes = array();
         $this->db->select('*');
         $this->db->where('status', 'Yes');
+
         $types = $this->db->get('pt_pass_categories')->result();
         foreach ($types as $t) {
             $passTypes[] = (object)array('id' => $t->id, 'name' => $t->name);
