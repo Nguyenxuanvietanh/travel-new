@@ -588,6 +588,7 @@ class Ajaxcalls extends MX_Controller {
 //process booking
 		function processBookingguest() {
 				$this->load->model('Admin/Bookings_model');
+				$this->load->model('Pass/Pass_model');
 				$this->form_validation->set_message('matches', trans("0310"));
 				$this->form_validation->set_message('valid_email', trans("0311"));
 				$this->form_validation->set_message('required', "%s " . trans("0312"));
@@ -600,8 +601,15 @@ class Ajaxcalls extends MX_Controller {
 					$bookingResult = array("error" => "yes", 'msg' => validation_errors());
 				}
 				else {
-
-					$bookingResult = $this->Bookings_model->doGuestBooking();
+					$type = $this->input->post('btype');
+					if($type == 'pass'){
+						$bookingResult = $this->Pass_model->doGuestBooking();
+						if($bookingResult){
+							redirect('pass/invoice/' . $bookingResult);
+						}
+					}else{
+						$bookingResult = $this->Bookings_model->doGuestBooking();
+					}
 				}
 
 				//$bookingResult = array("error" => "yes", 'msg' => $this->input->post('passport'));

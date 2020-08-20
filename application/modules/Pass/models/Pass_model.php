@@ -18,33 +18,38 @@ class Pass_model extends CI_Model {
 
 
 // Search posts from home page
-		function search_posts_front($perpage = null, $offset = null, $orderby = null, $cities = null) {
+		function search_pass_front($perpage = null, $offset = null, $orderby = null, $cities = null) {
 				$data = array();
-				$text = $this->input->get('s');
-//$days = pt_count_days($checkin,$checkout);
+				$search_params = [
+				    'name'        => $this->input->get('name'),
+				    'type'        => $this->input->get('type'),
+				    'category_id' => $this->input->get('category'),
+				    'ammount'     => $this->input->get('price')
+				  ];
 				if ($offset != null) {
 						$offset = ($offset == 1) ? 0 : ($offset * $perpage) - $perpage;
 				}
-				$this->db->select('pt_pass.*,pt_pass_translation.*');
+				$this->db->select('pt_pass.*,pt_pass_categories.name as category_name');
 				if ($orderby == "za") {
-						$this->db->order_by('pt_pass.post_title', 'desc');
+						$this->db->order_by('pt_pass.name', 'desc');
 				}
 				elseif ($orderby == "az") {
-						$this->db->order_by('pt_pass.post_title', 'asc');
+						$this->db->order_by('pt_pass.name', 'asc');
 				}
 				elseif ($orderby == "oldf") {
-						$this->db->order_by('pt_pass.post_id', 'asc');
+						$this->db->order_by('pt_pass.id', 'asc');
 				}
 				elseif ($orderby == "newf") {
-						$this->db->order_by('pt_pass.post_id', 'desc');
+						$this->db->order_by('pt_pass.id', 'desc');
 				}
-				$this->db->like('pt_pass.post_title', $text);
-				$this->db->or_like('pt_pass.post_desc', $text);
-				$this->db->or_like('pt_pass_translation.trans_title', $text);
-				$this->db->or_like('pt_pass_translation.trans_desc', $text);
-				$this->db->group_by('pt_pass.post_id');
-				$this->db->join('pt_pass_translation', 'pt_pass.post_id = pt_pass_translation.item_id', 'left');
-				$this->db->where('pt_pass.post_status', 'Yes');
+				foreach ($search_params as $key => $value) {
+					if($value && $value != ''){
+						$this->db->where('pt_pass.' . $key, $value);
+					}
+				}
+				$this->db->group_by('pt_pass.id');
+				$this->db->join('pt_pass_categories', 'pt_pass.category_id = pt_pass_categories.id', 'left');
+				$this->db->where('pt_pass.status', 'Yes');
 				$query = $this->db->get('pt_pass', $perpage, $offset);
 				$data['all'] = $query->result();
 				$data['rows'] = $query->num_rows();
@@ -555,6 +560,16 @@ class Pass_model extends CI_Model {
             return $this->db->get('pt_pass_categories_translation')->result();
 
 		}
+
+		function get_pass_detail($id){
+			$this->db->select('pt_pass.*,pt_pass_categories.name as category_name');
+			$this->db->join('pt_pass_categories', 'pt_pass.category_id = pt_pass_categories.id', 'left');
+			$this->db->where('pt_pass.id', $id);
+			$this->db->where('pt_pass.status', 'Yes');
+			$query = $this->db->get('pt_pass');
+
+			return $query->result();
+		}
 		
 		function get_order_detail($id){
 			$this->db->select('pt_pass_booking.*, pt_pass.ammount, pt_pass.name as pass_name');
@@ -583,11 +598,31 @@ class Pass_model extends CI_Model {
 			}
 
 			$this->db->join('pt_pass_categories', 'pt_pass.category_id = pt_pass_categories.id', 'left');
-			$this->db->where('pt_pass.post_status', 'Yes');
+			$this->db->where('pt_pass.status', 'Yes');
 			$query = $this->db->get('pt_pass', $perpage, $offset);
 			$data['all'] = $query->result();
 			$data['rows'] = $query->num_rows();
 			return $data;
+	}
+
+	function doGuestBooking(){
+		
+		$response = null;
+		$data = [
+			'pass_id' => $this->input->post('itemid'),
+			'fullname' => $this->input->post('firstname') . ' ' . $this->input->post('lastname'),
+			'email' => $this->input->post('email'),
+			'phone' => $this->input->post('phone'),
+			'address' => $this->input->post('address'),
+			'country' => $this->input->post('country'),
+			'notes' => $this->input->post('additionalnotes')
+		];
+
+		$this->db->insert('pt_pass_booking', $data);
+
+		$response = $this->db->insert_id();
+
+		return $response;
 	}
 
 }

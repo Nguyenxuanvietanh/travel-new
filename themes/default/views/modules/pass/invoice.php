@@ -82,13 +82,6 @@
 
 
         <div style="background:#ffffff;padding: 18px;">
-            <div class="blink_me">
-                <?php if($invoice->status == 'Complete'): ?>
-                    <div class="alert alert-success"><?=$invoice->status?></div>
-                <?php else: ?>
-                    <div class="alert alert-danger"><?=$invoice->status?></div>
-                <?php endif; ?>
-            </div>
             <h4 style="text-align: left">Pass card: </h4>
             <h5 style="margin: 10px 0; text-align: left; background: #eee; padding: 13px; color: #0068d7; text-transform: uppercase;"><strong><?= $pass_order->pass_name ?></strong></h5>
             <div>

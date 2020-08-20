@@ -38,11 +38,8 @@ class Pass_lib {
 				}
         }
 
-		function set_passid($slug) {
-			$this->db->select('post_id');
-			$this->db->where('post_slug', $slug);
-			$r = $this->db->get('pt_pass')->result();
-			$this->passid = $r[0]->post_id;
+		function set_passid($id) {
+			$this->passid = $id;
 		}
 
 //set car id by id
@@ -73,8 +70,9 @@ class Pass_lib {
 			else {
 				$orderby = $settings[0]->front_listings_order;
 			}
+
 			$rh = $this->ci->Pass_model->list_pass_front();
-			$data['all_posts'] = $this->ci->Pass_model->list_pass_front($perpage, $offset, $orderby);
+			$data['all_pass'] = $this->ci->Pass_model->list_pass_front($perpage, $offset, $orderby)['all'];
 			$data['paginationinfo'] = array('base' => 'pass/listing', 'totalrows' => $rh['rows'], 'perpage' => $perpage,'urisegment' => $totalSegments);
 			return $data;
 		}
