@@ -385,6 +385,11 @@
                         <div class="container">
                             <div class="">
                                 <div class="clearfix"></div>
+                                <h4><?php echo $module->name; ?></h4>
+                                <p>Price: <?php echo $curr->symbol . ' ' . $module->ammount; ?></p>
+                                <p>Type: <?php echo ($module->type) ? 'International' : 'National'; ?></p>
+                                <p>Category: <?php echo $module->category_name; ?></p>
+                                <p>Note: <?php echo $module->note; ?></p>
                                 <!-- Start checkInInstructions -->
                                 <?php if(!empty($checkInInstructions)){ ?>
                                 <div class="panel panel-default">
