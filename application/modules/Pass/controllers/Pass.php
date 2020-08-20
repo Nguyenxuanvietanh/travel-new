@@ -20,7 +20,8 @@ class Pass extends MX_Controller {
         $this->data['usersession'] = $this->session->userdata('pt_logged_customer');
         $this->data['passlib'] = $this->Pass_lib;
         $chk = modules :: run('Home/is_main_module_enabled', 'pass');
-        
+        $this->load->library('currconverter');
+        $this->data['curr'] = $this->currconverter;
         if (!$chk) {
             Error_404($this);
         }
@@ -52,75 +53,40 @@ class Pass extends MX_Controller {
     }
 
     public function index() {
-
         $settings = $this->Settings_model->get_front_settings('pass');
         $this->data['ptype'] = "index";
         $this->data['categoryname'] = "";
+        $this->listing();
+    }
 
-        if($this->validlang){
-
-                    $slug = $this->uri->segment(3);
-
-                }else{
-
-                    $slug = $this->uri->segment(2);
-                }
-        if (!empty ($slug)) {
-            $this->Pass_lib->set_passid($slug);
-            $this->data['details'] = $this->Pass_lib->post_details();
-            $this->data['title'] = $this->Pass_lib->title;
-            $this->data['desc'] = $this->Pass_lib->desc;
-            $this->data['thumbnail'] = $this->Pass_lib->thumbnail;
-            $this->data['date'] = $this->Pass_lib->date;
-            $hits = $this->Pass_lib->hits + 1;
-            $this->Pass_model->update_visits($this->data['details'][0]->post_id, $hits);
-            $relatedstatus = $settings[0]->testing_mode;
-            if ($relatedstatus == "1") {
-                $this->data['related_posts'] = $this->Pass_model->get_related_posts($this->data['details'][0]->post_related, $settings[0]->front_related);
-            }
-            else {
-                $this->data['related_posts'] = "";
-            }
-            $res = $this->Settings_model->get_contact_page_details();
-
-            $this->data['phone'] = $res[0]->contact_phone;
-
-            $this->data['langurl'] = base_url()."pass/{langid}/".$this->Pass_lib->slug;
-
-            $this->setMetaData($this->Pass_lib->title,$this->data['details'][0]->post_meta_desc,$this->data['details'][0]->post_meta_keywords);
-
-            $this->theme->view('pass/pass', $this->data, $this);
-        }
-        else {
-            $this->listing();
-        }
+    public function detail($id){
+        $this->load->library('currconverter');
+        $this->data['module'] = $this->Pass_model->get_pass_detail($id)[0];
+        $settings = $this->Settings_model->get_front_settings('pass');
+        $this->setMetaData( $settings[0]->header_title);
+        $this->theme->view('modules/pass/details', $this->data, $this);
     }
 
     function listing($offset = null) {
-        // $settings = $this->Settings_model->get_front_settings('pass');
-        $this->data['ptype'] = "index";
+        $settings = $this->Settings_model->get_front_settings('pass');
         $this->data['categoryname'] = "";
-        $allposts = $this->Pass_lib->show_pass($offset);
-        echo '<pre>';
-        print_r($allposts);
-        echo '</pre>';die;
-        $this->data['allposts'] = $allposts['all_posts'];
-        $this->data['info'] = $allposts['paginationinfo'];
+        $allpass = $this->Pass_lib->show_pass($offset);
+        $this->data['module'] = $allpass['all_pass'];
+        $this->data['info'] = $allpass['paginationinfo'];
         $this->data['langurl'] = base_url()."pass/{langid}/";
         $this->setMetaData( $settings[0]->header_title);
-        $this->theme->view('pass/index', $this->data, $this);
+        $this->theme->view('modules/pass/listing', $this->data, $this);
     }
 
     function search($offset = null) {
         $this->data['ptype'] = "search";
         $this->data['categoryname'] = "";
         $settings = $this->Settings_model->get_front_settings('pass');
-        $allposts = $this->Pass_lib->search_posts($offset);
-        $this->data['allposts'] = $allposts['all_posts'];
-        $this->data['info'] = $allposts['paginationinfo'];
-        $this->data['langurl'] = base_url()."pass/{langid}/";
+        $allpass = $this->Pass_model->search_pass_front($offset);
+        $this->data['module'] = $allpass['all'];
+        $this->data['info'] = $allpass['paginationinfo'];
         $this->setMetaData( $settings[0]->header_title);
-        $this->theme->view('pass/index', $this->data, $this);
+        $this->theme->view('modules/pass/listing', $this->data, $this);
     }
 
     function category($offset = null) {
@@ -128,9 +94,9 @@ class Pass extends MX_Controller {
         $id = $this->input->get('cat');
         $this->data['ptype'] = "category";
         $this->data['categoryname'] = pt_pass_category_name($id);
-        $allposts = $this->Pass_lib->category_posts($offset);
-        $this->data['allposts'] = $allposts['all_posts'];
-        $this->data['info'] = $allposts['paginationinfo'];
+        $allpass = $this->Pass_lib->category_posts($offset);
+        $this->data['allpass'] = $allpass['all_posts'];
+        $this->data['info'] = $allpass['paginationinfo'];
         $this->setMetaData( $settings[0]->header_title);
         $this->theme->view('pass/index', $this->data, $this);
     }
@@ -143,7 +109,7 @@ class Pass extends MX_Controller {
 		return call_user_func_array(array($this, $method), $params);
 
 		}else{
-				$this->index();
+            $this->index();
 		}
 
     }
@@ -152,12 +118,21 @@ class Pass extends MX_Controller {
         $this->load->library('currconverter');
         $this->data['curr']   = $this->currconverter;
         $id     = $this->input->get('id');
-        $this->data['order'] = $this->Pass_model->get_order_detail($id)[0];
+        $this->data['pass_order'] = $this->Pass_model->get_order_detail($id)[0];
         $settings = $this->Settings_model->get_front_settings('pass');
         $this->data['ptype'] = "index";
         $this->data['categoryname'] = "";
         
-        $this->theme->view('pass/invoice', $this->data, $this);
+        $this->theme->view('modules/pass/invoice', $this->data, $this);
+    }
+
+    function order(){
+        $id = $this->input->get('id');
+        $this->data['module'] = $this->Pass_model->get_pass_detail($id)[0];
+        $this->data['appModule'] = 'pass';
+        $this->setMetaData($this->data['module']->title, $this->data['module']->metadesc, $this->data['module']->keywords);
+
+        $this->theme->view('booking', $this->data, $this);
     }
 
 }
