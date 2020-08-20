@@ -62,7 +62,8 @@
                                             <option value="" selected>
                                                 <?php echo trans('0158'); ?>
                                             </option>
-                                            <?php foreach ($data['moduleTypes'] as $ttype) { ?>
+                                            <?php foreach ($data['moduleTypes'] as $ttype) {
+                                                var_dump($ttype); die();?>
                                                 <option value="<?php echo $ttype->id; ?>">
                                                     <?php echo $ttype->name; ?>
                                                 </option>
@@ -75,23 +76,6 @@
                     </div>
                 </div>
                 <div class="col-lg-2 col-xs-12">
-                    <div class="row">
-                        <!--<label class="hidden-xs go-right"><?php echo trans('0222'); ?> </label>-->
-                        <div class="clearfix"></div>
-                        <i class="iconspane-lg icon_set_1_icon-8"></i>
-                        <select class="input-lg form selectx" name="category_id" id="category_id">
-                            <option value="" selected>
-                                <?php echo trans('0158'); ?>
-                            </option>
-                            <?php foreach ($data['moduleTypes'] as $ttype) { ?>
-                                <option value="<?php echo $ttype->id; ?>">
-                                    <?php echo $ttype->name; ?>
-                                </option>
-                            <?php } ?>
-                        </select>
-                    </div>
-                </div>
-                <div class="col-lg-2 col-xs-12">
                     <input type="hidden" name="module_type"/>
                     <input type="hidden" name="slug"/>
                     <button type="submit" class="btn btn-primary btn-block"><i
@@ -100,8 +84,6 @@
             </div>
         </form>
     </div>
-    <input type="hidden" name="searching" class="searching" value="<?php echo $_GET['searching']; ?>">
-    <input type="hidden" class="modType" name="modType" value="<?php echo $_GET['modType']; ?>">
 </div>
 <script>
     $(document).ready(function () {
@@ -125,7 +107,7 @@
             let p_5 = data['category_id'];
             p_5 = (p_5) ? p_5 : "null";
             let url = "";
-            return url + "/" + p_1 + "/" + p_3 + "/" + p_4 +"/" + p_5 +;
+            return url + "/" + p_1 + "/" + p_3 + "/" + p_4 +"/" + p_5;
         }
     });
 </script>

@@ -515,7 +515,6 @@ class Home extends MX_Controller {
             redirect('admin');
         }
     }
-
 public function supplier_register() {
     $allowsupplierreg = $this->data['app_settings'][0]->allow_supplier_registration;
     if ($allowsupplierreg == "0") {

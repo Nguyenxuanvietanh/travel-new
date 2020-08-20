@@ -56,7 +56,7 @@
                if ($module == "hotelbeds") { include 'views/modules/hotelbeds/main_search.php'; }
                if ($module == "Travelport_hotels") { include 'views/modules/travelport/hotel/search_form.php'; }
 
-               if ($module == "pass") { include 'views/modules/pass/main_search.php'; }
+               if ($module == "pass") { require $themeurl.'views/modules/pass/main_search.php'; }
 
                if ($module == "TravelhopeHotels") { include 'views/modules/hotels/search.php'; }
 
