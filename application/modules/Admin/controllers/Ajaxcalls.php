@@ -605,7 +605,7 @@ class Ajaxcalls extends MX_Controller {
 					if($type == 'pass'){
 						$bookingResult = $this->Pass_model->doGuestBooking();
 						if($bookingResult){
-							redirect('pass/invoice/' . $bookingResult);
+							redirect('/pass/invoice?id=' . $bookingResult);
 						}
 					}else{
 						$bookingResult = $this->Bookings_model->doGuestBooking();
