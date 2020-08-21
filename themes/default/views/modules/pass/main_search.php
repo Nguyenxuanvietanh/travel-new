@@ -56,7 +56,7 @@
                             <div class="row gap-10 mb-15">
                                 <div class="col-12">
                                     <div class="form-group">
-                                        <label for="room-amount">Type</label>
+                                        <label for="room-amount">Category</label>
                                         <div class="clear"></div>
                                         <div class="form-icon-left">
                                             <select class="chosen-the-basic form-control" name="category_id" id="category_id">

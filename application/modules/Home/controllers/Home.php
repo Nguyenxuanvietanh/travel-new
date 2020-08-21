@@ -218,10 +218,13 @@ class Home extends MX_Controller {
                     $this->load->helper("Rentals/rentals_front");
                     $this->load->model('Rentals/Rentals_model');
                 }
-
+                if (isModuleActive('pass')){
+                    $activeModules[] = "pass";
+                    $this->load->library('Pass/Pass_lib');
+                    $this->data['moduleTypes'] = $this->Pass_lib->passTypes();
+                }
                 if (isModuleActive('boats')) {
                     $activeModules[] = "boats";
-
                     $this->load->library('Boats/Boats_lib');
                     $this->data['boatslib'] = $this->Boats_lib;
                     $this->data['locationsList'] = $this->Boats_lib->getLocationsList();
@@ -241,18 +244,10 @@ class Home extends MX_Controller {
                         $searchForm->parseUriString($args);
                     }
                     $this->data['BoatsSearchForm'] = $searchForm;
-                    // default search field data list.
                     $this->data['defaultBoatsListForSearchField'] = $this->Boats_lib->getDefaultBoatsListForSearchField();
                     $this->load->helper("Boats/boats_front");
                     $this->load->model('Boats/Boats_model');
                 }
-
-                if (isModuleActive('pass')){
-                    $activeModules[] = "pass";
-                    $this->load->library('Pass/Pass_lib');
-                    $this->data['moduleTypes'] = $this->Pass_lib->passTypes();
-                }
-
                 if (isModuleActive('Amadeus')) {
                     $moduleSetting = $this->App->service("ModuleService")->get("Amadeus");
                     $this->load->model('Amadeus/FlightsSearchModel');
