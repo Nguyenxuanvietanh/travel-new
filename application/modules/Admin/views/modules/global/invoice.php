@@ -65,7 +65,7 @@
   <div class="main-wrapper scrollspy-action">
     <div class="page-wrapper page-confirmation bg-light">
       <div class="container">
-        <?php include 'pay.php'; ?>
+        <?php if($invoice->module != 'pass'){ include 'pay.php'; } ?>
         <?php if ($invoice->status == "unpaid") { if (time() < $invoice->expiryUnixtime) { ?>
         <div class="success-box unpaid">
           <div class="icon">
@@ -822,13 +822,6 @@
           </div>
         </div>
       </div>
-      <!--<div class="text-center">
-          <div id="editor"></div>
-          <input type="button" class="btn btn-success" value="Print" onclick="printDiv()"/>
-          <button id="downloadInvoice" class="btn btn-default"><?php echo trans('0596');?></button>
-          <a href="#" id="image"></a>
-          <a href="javascript:void()" id="btn" class="btn btn-primary"><?php echo trans('0593');?></a>
-        </div>-->
       <br><br><br>
     </div>
   </div>
