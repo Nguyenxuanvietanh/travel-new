@@ -221,7 +221,7 @@ class Home extends MX_Controller {
                 if (isModuleActive('pass')){
                     $activeModules[] = "pass";
                     $this->load->library('Pass/Pass_lib');
-                    $this->data['moduleTypes'] = $this->Pass_lib->passTypes();
+                    $this->data['moduleTypesPass'] = $this->Pass_lib->passTypes();
                 }
                 if (isModuleActive('boats')) {
                     $activeModules[] = "boats";

@@ -1,4 +1,5 @@
-<style>
+<?php var_dump($data); die(); ?>
+#<style>
     .form-control {
         overflow: hidden;
         -webkit-appearance: none;
@@ -9,7 +10,7 @@
         <form autocomplete="off" action="<?php echo base_url($module.'/search'); ?>" method="GET" role="search">
             <div class="form-inner">
                 <div class="row gap-10 mb-20 row-reverse">
-                    <div class="col-lg-3 col-xs-12">
+                    <div class="col-lg-4 col-xs-12">
                         <div class="form-group">
                             <label>Name</label>
                             <div class="clear"></div>
@@ -19,16 +20,16 @@
                             </div>
                         </div>
                     </div>
-                    <div class="col-lg-2 col-xs-12">
-                        <div class="form-group">
-                            <label>Price</label>
-                            <div class="clear"></div>
-                            <div class="form-icon-left typeahead__container">
-                                <span class="icon-font "</i></span>
-                                <input type="number" name="ammount" class="form-control">
-                            </div>
-                        </div>
-                    </div>
+<!--                    <div class="col-lg-2 col-xs-12">-->
+<!--                        <div class="form-group">-->
+<!--                            <label>Price</label>-->
+<!--                            <div class="clear"></div>-->
+<!--                            <div class="form-icon-left typeahead__container">-->
+<!--                                <span class="icon-font "</i></span>-->
+<!--                                <input type="number" name="ammount" class="form-control">-->
+<!--                            </div>-->
+<!--                        </div>-->
+<!--                    </div>-->
                     <div class="col-lg-3 col-xs-12">
                         <div class="col-inner">
                             <div class="row gap-10 mb-15">
@@ -51,7 +52,7 @@
                             </div>
                         </div>
                     </div>
-                    <div class="col-lg-2 col-xs-12">
+                    <div class="col-lg-3 col-xs-12">
                         <div class="col-inner">
                             <div class="row gap-10 mb-15">
                                 <div class="col-12">
@@ -63,7 +64,7 @@
                                                 <option value="" selected>
                                                     <?php echo trans('0158'); ?>
                                                 </option>
-                                                <?php foreach ($data['moduleTypes'] as $ttype) { ?>
+                                                <?php foreach ($data['moduleTypesPass'] as $ttype) { ?>
                                                     <option value="<?php echo $ttype->id; ?>">
                                                         <?php echo $ttype->name; ?>
                                                     </option>
@@ -95,18 +96,17 @@
             console.log($(this).attr('action') + create_slug(values));
             window.location.href = $(this).attr('action') + create_slug(values);
         });
-
         function create_slug(data) {
             let p_1 = data['name'];
             p_1 = (p_1) ? p_1 : "null";
-            let p_3 = data['ammount'];
-            p_3 = (p_3) ? p_3 : 0;
+            // let p_3 = data['ammount'];
+            // p_3 = (p_3) ? p_3 : 0;
             let p_4 = data['type'];
             p_4 = (p_4) ? p_4 : 0;
             let p_5 = data['category_id'];
             p_5 = (p_5) ? p_5 : "null";
             let url = "";
-            return url + "/" + p_1 + "/" + p_3 + "/" + p_4 + "/" + p_5;
+            return url + "/" + p_1 + "/" + p_4 + "/" + p_5;
         }
     });
 </script>

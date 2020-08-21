@@ -83,6 +83,7 @@ class Pass extends MX_Controller {
         $this->data['categoryname'] = "";
         $settings = $this->Settings_model->get_front_settings('pass');
         $allpass = $this->Pass_model->search_pass_front($offset);
+        $this->data['moduleTypes']=  $this->Pass_lib->passTypes();
         $this->data['module'] = $allpass['all'];
         $this->data['info'] = $allpass['paginationinfo'];
         $this->setMetaData( $settings[0]->header_title);

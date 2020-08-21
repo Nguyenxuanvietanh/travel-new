@@ -66,8 +66,9 @@
                                             <?php
                                                 searchForm('pass',$data);
                                             ?>
+                                            <?php } ?>
                                         </div>
-                                    <?php }}
+                                    <?php }
                                     if ($module->ia_active == 1 && $module->parent_id == 'hotels') { ?>
                                         <!-- Hotels  -->
                                         <div role="tabpanel" class="tab-pane <?php if ($order == $module->order) {
@@ -76,7 +77,6 @@
                                             Search_Form($module->name,"hotels");
                                             ?>
                                         </div>
-
                                     <?php }
                                     if ($module->ia_active == 1 && $module->parent_id == 'flights') { ?>
                                         <!-- Flights  -->
