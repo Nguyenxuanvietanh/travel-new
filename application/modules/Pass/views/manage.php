@@ -77,8 +77,8 @@
             <label class="col-md-2 control-label text-left">Pass Type</label>
             <div class="col-md-2">
               <select data-placeholder="Select" class="form-control" name="type">
-                <option value="0" <?php if(@$pass_data[0]->type == "0"){ echo 'selected'; } ?>>National</option>
-                <option value="1" <?php if(@$pass_data[0]->type == "1"){ echo 'selected'; } ?>>InterNational</option>
+                <option value="1" <?php if(@$pass_data[0]->type == "1"){ echo 'selected'; } ?>>National</option>
+                <option value="2" <?php if(@$pass_data[0]->type == "2"){ echo 'selected'; } ?>>InterNational</option>
               </select>
             </div>
             <?php } ?>
