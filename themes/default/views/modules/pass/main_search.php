@@ -39,6 +39,9 @@
                                         <div class="clear"></div>
                                         <div class="form-icon-left">
                                             <select class="chosen-the-basic form-control" name="type" id="type">
+                                                <option value="" selected>
+                                                    <?php echo trans('0158'); ?>
+                                                </option>
                                                 <option value="0" selected>
                                                     National
                                                 </option>
