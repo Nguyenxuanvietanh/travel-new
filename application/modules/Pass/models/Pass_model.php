@@ -11,9 +11,9 @@ class Pass_model extends CI_Model {
 
 // pass category name
 		function category_name($id) {
-				$this->db->where('cat_slug', $id);
+				$this->db->where('slug', $id);
 				$res = $this->db->get('pt_pass_categories')->result();
-				return $res[0]->cat_name;
+				return $res[0]->name;
 		}
 
 
@@ -191,7 +191,7 @@ class Pass_model extends CI_Model {
 				if ($offset != null) {
 						$offset = ($offset == 1) ? 0 : ($offset * $perpage) - $perpage;
 				}
-				$this->db->order_by('cat_id', 'desc');
+				$this->db->order_by('id', 'desc');
 				$query = $this->db->get('pt_pass_categories', $perpage, $offset);
 				$data['all'] = $query->result();
 				$data['nums'] = $query->num_rows();
@@ -206,10 +206,10 @@ class Pass_model extends CI_Model {
 						$offset = ($offset == 1) ? 0 : ($offset * $perpage) - $perpage;
 				}
 				if (!empty ($cattitle)) {
-						$this->db->like('cat_name', $cattitle);
+						$this->db->like('name', $cattitle);
 				}
-				$this->db->where('cat_status', $status);
-				$this->db->order_by('cat_id', 'desc');
+				$this->db->where('status', $status);
+				$this->db->order_by('id', 'desc');
 				$query = $this->db->get('pt_pass_categories', $perpage, $offset);
 				$data['all'] = $query->result();
 				$data['nums'] = $query->num_rows();
@@ -251,28 +251,19 @@ class Pass_model extends CI_Model {
 
 		function updatecategory() {
 				$id = $this->input->post('categoryid');
-				$this->db->select("cat_id");
-				$this->db->order_by("cat_id", "desc");
+				$this->db->select("id");
+				$this->db->order_by("id", "desc");
 				$query = $this->db->get('pt_pass_categories');
 				$lastid = $query->result();
 				if (empty ($lastid)) {
 						$catlastid = 1;
 				}
 				else {
-						$catlastid = $lastid[0]->cat_id + 1;
+						$catlastid = $lastid[0]->id + 1;
 				}
-				$this->db->select("cat_id");
-				$this->db->where("cat_id !=", $id);
-				$this->db->where("cat_slug", $this->input->post('slug'));
-				$queryc = $this->db->get('pt_pass_categories')->num_rows();
-				if ($queryc > 0) {
-						$slug = create_url_slug($this->input->post('name')) . "-" . $catlastid;
-				}
-				else {
-						$slug = create_url_slug($this->input->post('name'));
-				}
-				$data = array('cat_name' => $this->input->post('name'), 'cat_slug' => $slug, 'cat_status' => $this->input->post('status'));
-				$this->db->where('cat_id', $id);
+				$this->db->select("id");
+				$data = array('name' => $this->input->post('name'), 'status' => $this->input->post('status'));
+				$this->db->where('id', $id);
 				$this->db->update('pt_pass_categories', $data);
                 $this->updatePassCategoryTranslation($this->input->post('translated'),$id);
 		}
@@ -291,8 +282,8 @@ class Pass_model extends CI_Model {
 // Disable category
 
 		public function disable_cat($id) {
-				$data = array('cat_status' => '0');
-				$this->db->where('cat_id', $id);
+				$data = array('status' => '0');
+				$this->db->where('id', $id);
 				$this->db->update('pt_pass_categories', $data);
 		}
 // Disable post
@@ -305,8 +296,8 @@ class Pass_model extends CI_Model {
 // Enable category
 
 		public function enable_cat($id) {
-				$data = array('cat_status' => '1');
-				$this->db->where('cat_id', $id);
+				$data = array('status' => '1');
+				$this->db->where('id', $id);
 				$this->db->update('pt_pass_categories', $data);
 		}
 // Enable post

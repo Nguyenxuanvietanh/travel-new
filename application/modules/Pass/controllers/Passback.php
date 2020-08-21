@@ -204,7 +204,7 @@ class Passback extends MX_Controller {
 
 		$this->data['content'] = $xcrud->render();
 		$this->data['page_title'] = 'Pass Categories';
-		$this->data['main_content'] = 'blog_categories_view';
+		$this->data['main_content'] = 'pass_categories_view';
 		$this->data['header_title'] = 'Pass Categories';
         $this->data['table_name'] = 'pt_pass_categories';
         $this->data['main_key'] = 'id';
