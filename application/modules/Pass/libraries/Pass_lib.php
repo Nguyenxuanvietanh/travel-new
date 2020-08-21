@@ -103,7 +103,16 @@ class Pass_lib
         $data['paginationinfo'] = array('base' => 'pass/listing', 'totalrows' => $rh['rows'], 'perpage' => $perpage, 'urisegment' => $totalSegments);
         return $data;
     }
+    function getDefaultPassListForSearchField(){
+        $pass = $this->db->select('id AS id, name AS text')->get('pt_pass')->result();
+         
 
+          $resultin_array = [
+              ["text" => "pass", "children" => $pass],
+          ];
+
+          return json_encode($resultin_array);
+    }
     function post_short_details()
     {
         $this->db->select('post_title,post_desc,post_created_at,post_slug');

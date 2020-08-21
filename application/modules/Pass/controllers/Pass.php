@@ -79,15 +79,26 @@ class Pass extends MX_Controller {
     }
 
     function search($offset = null) {
+        $id = $this->input->get('id_pass');
+        if($id){
+            $this->load->library('currconverter');
+            $this->data['module'] = $this->Pass_model->get_pass_detail($id)[0];
+            $settings = $this->Settings_model->get_front_settings('pass');
+            $this->setMetaData( $settings[0]->header_title);
+            $this->theme->view('modules/pass/details', $this->data, $this);
+        }else{
         $this->data['ptype'] = "search";
         $this->data['categoryname'] = "";
         $settings = $this->Settings_model->get_front_settings('pass');
+            
         $allpass = $this->Pass_model->search_pass_front($offset);
         $this->data['moduleTypes']=  $this->Pass_lib->passTypes();
         $this->data['module'] = $allpass['all'];
         $this->data['info'] = $allpass['paginationinfo'];
         $this->setMetaData( $settings[0]->header_title);
         $this->theme->view('modules/pass/listing', $this->data, $this);
+    }
+        
     }
 
     function category($offset = null) {
@@ -127,6 +138,14 @@ class Pass extends MX_Controller {
         $this->theme->view('modules/pass/invoice', $this->data, $this);
     }
 
+    function order(){
+        $id = $this->input->get('id');
+        $this->data['module'] = $this->Pass_model->get_pass_detail($id)[0];
+        $this->data['appModule'] = 'pass';
+        $this->setMetaData($this->data['module']->title, $this->data['module']->metadesc, $this->data['module']->keywords);
+
+        $this->theme->view('booking', $this->data, $this);
+    }
     function booking(){
         if($this->session->userdata['pt_logged_customer']){
             $user_id = $this->session->userdata['pt_logged_customer'];

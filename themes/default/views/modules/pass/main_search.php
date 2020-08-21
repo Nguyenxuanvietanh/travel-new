@@ -15,7 +15,8 @@
                             <div class="clear"></div>
                             <div class="form-icon-left typeahead__container">
                                 <span class="icon-font text-muted"></span>
-                                <input type="text" name="name" class="form-control">
+                                <input placeholder="Search by pass name" type="text" name="name" class="form-control passlist<?php echo $module; ?>">
+                                <input type="hidden" name="id_pass" class="id_pass">
                             </div>
                         </div>
                     </div>
@@ -108,4 +109,26 @@
             return url + "/" + p_1 + "/" + p_4 + "/" + p_5;
         }
     });
+
 </script>
+ <script>
+        $(function () {
+            $(".passlist<?php echo $module; ?>").select2({
+                width: '100%',
+                allowClear: true,
+                maximumSelectionSize: 1,
+                placeholder: "Start typing",
+                data: JSON.parse('<?=$data['modulePassList']?>'),
+                initSelection: function (element, callback) {
+                callback({id: 1, text: 'Search by pass name'})
+            }
+            });
+
+            $(".passlist<?php echo $module; ?>").on("select2-open",
+                function (e) {
+                });
+            $(".passlist<?php echo $module; ?>").on("select2-selecting", function (e) {
+                $(".id_pass").val(e.object.id);
+            })
+        })
+    </script>
