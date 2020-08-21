@@ -158,28 +158,7 @@
         <div class="fullwidth-horizon-sticky d-none d-lg-block">
             <div class="fullwidth-horizon-sticky-inner">
                 <div class="container">
-                    <div class="fullwidth-horizon-sticky-item clearfix">
-                        <ul id="horizon-sticky-nav" class="horizon-sticky-nav clearfix">
-                            <li>
-                                <a href="#detail-content-sticky-nav-00"><?php echo trans('044');?></a>
-                            </li>
-                            <li>
-                                <a href="#detail-content-sticky-nav-01"><?php echo trans('0248');?></a>
-                            </li>
-                            <li>
-                                <a href="#packages"><?php echo trans('0630');?></a>
-                            </li>
-                            <li>
-                                <a href="#detail-content-sticky-nav-03"><?php echo trans('032');?></a>
-                            </li>
-                            <li>
-                                <a href="#detail-content-sticky-nav-05"><?php echo trans('040');?></a>
-                            </li>
-                            <li>
-                                <a href="#detail-content-sticky-nav-06"><?php echo trans('0396');?></a>
-                            </li>
-                        </ul>
-                    </div>
+
                 </div>
             </div>
         </div>
@@ -268,23 +247,6 @@
                 </div>
                 <div class="col-12 col-lg-8 col-xl-9">
                     <div class="content-wrapper">
-                        <div class="slick-gallery-slideshow detail-gallery">
-                            <div class="slider gallery-slideshow">
-                                <?php foreach($module->sliderImages as $img){ ?>
-                                <div>
-                                    <div class="image"><img src="<?php echo $img['fullImage']; ?>" alt="Images" /></div>
-                                </div>
-                                <?php } ?>
-                            </div>
-                            <div class="slider gallery-nav">
-                                <?php foreach($module->sliderImages as $img){ ?>
-                                <div>
-                                    <div class="image"><img src="<?php echo $img['fullImage']; ?>" alt="Images" /></div>
-                                </div>
-                                <?php } ?>
-                            </div>
-                        </div>
-                        <?php require $themeurl.'views/socialshare.php';?>
                         <?php include $themeurl.'views/includes/copyURL.php';?>
                         <div id="detail-content-sticky-nav-01" class="fullwidth-horizon-sticky-section tour-over">
                             <h3 class="heading-title"><span><?php echo trans('0248'); ?></span></h3>
