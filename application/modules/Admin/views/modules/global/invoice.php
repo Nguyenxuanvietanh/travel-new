@@ -684,8 +684,20 @@
                 <hr class="mb-30 mt-30" />
                 <ul class="confirmation-list">
                   <li class="clearfix">
+                    <span class="font-weight-bold"> Pass</span>
+                    <span><?php echo $item->pass_name; ?></span>
+                  </li>
+                  <li class="clearfix">
+                    <span class="font-weight-bold"> Type</span>
+                    <span><?php echo ($item->type) ? 'InterNational' : 'National'; ?></span>
+                  </li>
+                  <li class="clearfix">
+                    <span class="font-weight-bold"> Category</span>
+                    <span><?php echo $item->category_name; ?></span>
+                  </li>
+                  <li class="clearfix">
                     <span class="font-weight-bold"> Price</span>
-                    <span><?php echo $curr->symbol . ' ' . $item->ammount; ?></span>
+                    <span><?php echo $curr->symbol . ' ' . str_replace(".00","",number_format($item->ammount,2)); ?></span>
                   </li>
                   <li class="clearfix">
                     <span class="font-weight-bold"> Quantity</span>
