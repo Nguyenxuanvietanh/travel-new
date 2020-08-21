@@ -42,10 +42,10 @@
                                                 <option value="" selected>
                                                     <?php echo trans('0158'); ?>
                                                 </option>
-                                                <option value="0">
+                                                <option value="1">
                                                     National
                                                 </option>
-                                                <option value="1">
+                                                <option value="2">
                                                     International
                                                 </option>
                                             </select>
