@@ -735,8 +735,13 @@
                   <div class="clear"></div>
                 </li>
                 <li class="clearfix">
-                  <span class="font-weight-bold go-right"><?=lang('090')?></span>
+                  <span class="font-weight-bold go-right">Full Name</span>
                   <span class="go-left float-right"><?php echo $invoice->userFullName; ?></span>
+                  <div class="clear"></div>
+                </li>
+                <li class="clearfix">
+                  <span class="font-weight-bold go-right">Email</span>
+                  <span class="go-left float-right"><?php echo $invoice->accountEmail; ?></span>
                   <div class="clear"></div>
                 </li>
                 <li>
