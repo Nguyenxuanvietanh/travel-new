@@ -264,8 +264,14 @@ class Passback extends MX_Controller {
 		$xcrud->table('pt_pass_booking');
 		$xcrud->join('pass_id', 'pt_pass', 'id');
 		$xcrud->order_by('id', 'asc');
-		$xcrud->columns('fullname,email,phone,pt_pass.name,pt_pass.ammount');
-		$xcrud->label('fullname', 'Full Name')->label('email', 'Email')->label('phone', 'Phone')->label('pt_pass.name', 'Pass')->label('pt_pass.ammount', 'Price');
+		$xcrud->columns('fullname,email,phone,pt_pass.name,pt_pass.ammount,quantity,total');
+		$xcrud->label('fullname', 'Full Name')
+		->label('email', 'Email')
+		->label('phone', 'Phone')
+		->label('pt_pass.name', 'Pass')
+		->label('pt_pass.ammount', 'Price')
+		->label('quantity', 'Quantity')
+		->label('total', 'Total');
 		$xcrud->button(base_url() . 'pass/invoice/?id={id}', 'View Invoice', 'fa fa-search-plus', 'btn btn-primary', array('target' => '_blank'));
 		$xcrud->label('fullname', 'Name')->label('email', 'Email')->label('phone', 'Phone');
 		$xcrud->unset_add();

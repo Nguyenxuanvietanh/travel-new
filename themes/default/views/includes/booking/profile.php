@@ -48,6 +48,8 @@
             <!-- PHPTRAVELS Guest Booking Starting  -->
             <div class="tab-pane fade in active show" id="Guest">
                 <form id="guestform" class="booking_page">
+                    <input type="hidden" name="quantity" value="<?php echo $params['quantity']; ?>">
+                    <input type="hidden" name="price" value="<?php echo $module->ammount; ?>">
                     <div class="row gap-20 mb-0">
                         <div class="col-12 col-sm-6 o2">
                             <div class="form-group">
@@ -135,6 +137,8 @@
             <!-- PHPTRAVELS Sign in Starting  -->
             <div class="tab-pane fade" id="Sign-In">
                 <form action="" method="POST" id="loginform" class="booking_page">
+                    <input type="hidden" name="quantity" value="<?php echo $params['quantity']; ?>">
+                    <input type="hidden" name="price" value="<?php echo $module->ammount; ?>">
                     <div class=" row form-group">
                         <div class="col-md-12 col-12">
 
@@ -179,6 +183,8 @@
         <!-- PHPTRAVELS LoggeIn Booking Starting  -->
         <div id="loggeduserdiv">
             <form id="loggedform">
+                <input type="hidden" name="quantity" value="<?php echo $params['quantity']; ?>">
+                <input type="hidden" name="price" value="<?php echo $module->ammount; ?>">
                 <div class="panel-body">
                     <div class="row">
                         <div class="col-md-6">
