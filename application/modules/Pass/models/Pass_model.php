@@ -563,9 +563,10 @@ class Pass_model extends CI_Model {
 		}
 		
 		function get_order_detail($id){
-			$this->db->select('pt_pass_booking.*, pt_pass.ammount, pt_pass.name as pass_name');
+			$this->db->select('pt_pass_booking.*, pt_pass.ammount, pt_pass.name as pass_name, pt_pass.type as type, pt_pass_categories.name as category_name');
 			$this->db->where('pt_pass_booking.id', $id);
 			$this->db->join('pt_pass', 'pt_pass.id = pt_pass_booking.pass_id', 'left');
+			$this->db->join('pt_pass_categories', 'pt_pass.category_id = pt_pass_categories.id', 'left');
             return $this->db->get('pt_pass_booking')->result();
 		}
 
