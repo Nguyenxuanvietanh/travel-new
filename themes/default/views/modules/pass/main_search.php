@@ -11,21 +11,21 @@
                 <div class="row gap-10 mb-20 row-reverse">
                     <div class="col-lg-3 col-xs-12">
                         <div class="form-group">
-                            <label>Pass name</label>
+                            <label>Name</label>
                             <div class="clear"></div>
                             <div class="form-icon-left typeahead__container">
                                 <span class="icon-font text-muted"></span>
-                                <input type="text" name="name" class="form-control" required>
+                                <input type="text" name="name" class="form-control">
                             </div>
                         </div>
                     </div>
                     <div class="col-lg-2 col-xs-12">
                         <div class="form-group">
-                            <label>Ammount</label>
+                            <label>Price</label>
                             <div class="clear"></div>
                             <div class="form-icon-left typeahead__container">
                                 <span class="icon-font "</i></span>
-                                <input type="number" name="ammount" class="form-control" required>
+                                <input type="number" name="ammount" class="form-control">
                             </div>
                         </div>
                     </div>
