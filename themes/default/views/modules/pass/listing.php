@@ -32,7 +32,6 @@
                 <p class="text-muted post-heading"><?= count($module) ?> <?=lang('0535')?></p>
               </div>
               <div class="ml-auto">
-                <button class="btn btn-secondary btn-wide btn-toggle collapsed btn-sm btn-change-search" data-toggle="collapse" data-target="#change-search"><?=lang('0106')?> <?=lang('012')?></button>
               </div>
             </div>
             <div class="product-long-item-wrapper">

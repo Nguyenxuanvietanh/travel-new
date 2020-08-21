@@ -159,6 +159,13 @@ class Invoice extends MX_Controller {
               $this->data['flight_data'] = $flight_data[1];
               $this->data['item'] = $flight_data[0];
           }
+
+          elseif($this->data['invoice']->module == "pass"){
+            $this->load->library('currconverter');
+            $this->data['curr'] = $this->currconverter;
+            $this->load->model('Pass/Pass_model');
+            $this->data['item'] = $this->Pass_model->get_order_detail($this->data['invoice']->bookingID)[0];
+          }
           $this->theme->view('Admin/modules/global/invoice', $this->data, $this);
        // $this->load->view('Admin/modules/global/invoice', $this->data);
         }

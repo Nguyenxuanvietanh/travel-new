@@ -610,6 +610,8 @@ class Pass_model extends CI_Model {
 		$response = null;
 		$data = [
 			'pass_id' => $this->input->post('itemid'),
+			'quantity' => $this->input->post('quantity'),
+			'total'		=> $this->input->post('quantity') * $this->input->post('price'),
 			'fullname' => $this->input->post('firstname') . ' ' . $this->input->post('lastname'),
 			'email' => $this->input->post('email'),
 			'phone' => $this->input->post('phone'),

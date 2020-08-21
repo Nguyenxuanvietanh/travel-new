@@ -86,7 +86,9 @@
             <h5 style="margin: 10px 0; text-align: left; background: #eee; padding: 13px; color: #0068d7; text-transform: uppercase;"><strong><?= $pass_order->pass_name ?></strong></h5>
             <div>
             </div>
+            <div class="text-left">Quantity: <?=$pass_order->quantity?></div>
         </div>
+        
         <div style="background: #ffffff; padding: 15px; text-align: left; border-top: 3px solid #a3a3a3;">
                 <table style="width:100%;background: #F5F5F5; padding: 10px;">
                     <thead style="text-transform:uppercase;background: #e1dddd;">
@@ -98,7 +100,7 @@
                     <tbody>
                         <tr>
                             <td width="33.3%" align="center" style="font-family: Tahoma; font-size: 16px; font-weight: 400; line-height: 24px; padding: 5px;">
-                            USD $<strong><?=$pass_order->ammount?></strong>
+                            USD $<strong><?=$pass_order->total?></strong>
                             </td>
                         </tr>
                     </tbody>

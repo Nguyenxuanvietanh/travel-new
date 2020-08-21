@@ -602,14 +602,7 @@ class Ajaxcalls extends MX_Controller {
 				}
 				else {
 					$type = $this->input->post('btype');
-					if($type == 'pass'){
-						$bookingResult = $this->Pass_model->doGuestBooking();
-						if($bookingResult){
-							redirect('/pass/invoice?id=' . $bookingResult);
-						}
-					}else{
-						$bookingResult = $this->Bookings_model->doGuestBooking();
-					}
+					$bookingResult = $this->Bookings_model->doGuestBooking();
 				}
 
 				//$bookingResult = array("error" => "yes", 'msg' => $this->input->post('passport'));

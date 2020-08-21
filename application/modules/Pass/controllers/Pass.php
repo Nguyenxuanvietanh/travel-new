@@ -127,8 +127,17 @@ class Pass extends MX_Controller {
         $this->theme->view('modules/pass/invoice', $this->data, $this);
     }
 
-    function order(){
-        $id = $this->input->get('id');
+    function booking(){
+        if($this->session->userdata['pt_logged_customer']){
+            $user_id = $this->session->userdata['pt_logged_customer'];
+            $this->load->model('Admin/Accounts_model');
+            $this->data['profile'] = $this->Accounts_model->get_profile_details($user_id);
+        }
+        $id = $this->input->post('id');
+        $pass = $this->Pass_model->get_pass_detail($id)[0];
+        $this->load->library('currconverter');
+        $this->data['curr']   = $this->currconverter;
+        $this->data['params'] = $this->input->post();
         $this->data['module'] = $this->Pass_model->get_pass_detail($id)[0];
         $this->data['appModule'] = 'pass';
         $this->setMetaData($this->data['module']->title, $this->data['module']->metadesc, $this->data['module']->keywords);

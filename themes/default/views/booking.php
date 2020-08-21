@@ -633,6 +633,44 @@
                             <?php } ?>
 
                             <div class="col-md-4 summary">
+                                <?php if($appModule == "pass"){ ?>
+                                    <div class="bg-white-shadow pt-25 ph-30 pb-40 sticky-kit sidebar-wrapper">
+                                    <h4><?php echo trans('0558');?></h4>
+                                    <div class="clear"></div>
+                                    <hr class="mt-0">
+                                    <div class="row">
+                                        <div class="col-md-6 text-left">
+                                            Pass: 
+                                        </div>
+                                        <div class="col-md-6 text-right">
+                                            <?php echo $module->name; ?>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-md-6 text-left">
+                                            Price: 
+                                        </div>
+                                        <div class="col-md-6 text-right">
+                                            <?php echo $curr->symbol . ' ' . $module->ammount; ?>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-md-6 text-left">
+                                            Quantity: 
+                                        </div>
+                                        <div class="col-md-6 text-right">
+                                            <?php echo $params['quantity']; ?>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-md-6 text-left">
+                                            Total: 
+                                        </div>
+                                        <div class="col-md-6 text-right">
+                                            <b style="color: red"><?php echo $curr->symbol . ' ' . $module->ammount * $params['quantity']; ?></b>
+                                        </div>
+                                    </div>
+                                <?php } ?>
                                 <!--  *****************************************************  -->
                                 <!--                      HOTELS MODULE                      -->
                                 <!--  *****************************************************  -->

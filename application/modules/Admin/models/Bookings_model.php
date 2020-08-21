@@ -1053,6 +1053,7 @@ class Bookings_model extends CI_Model {
             $bookingData = json_decode($this->Cars_lib->getUpdatedDataBookResultObject($itemid,$extras,$pickup,$drop,$pickupdate,$dropdate));
             $error = false;
         }
+        
 
 
 
@@ -1100,12 +1101,25 @@ class Bookings_model extends CI_Model {
             $this->updateCoupon($coupon);
 
         }
+
+        if($bookingtype == "pass"){
+            $itemid = $this->input->post('itemid');
+            $checkin = date("Y-m-d");
+            $checkout = date("Y-m-d");
+            $curr = $this->currconverter;
+            $currCode = $curr->code;
+            $currSymbol = $curr->symbol;
+            $adults = 1;
+            $error = false;
+        }
         if (!$error) {
             $data = array('booking_ref_no' => $refno, 'booking_type' => $bookingtype, 'booking_item' => $itemid, 'booking_subitem' => $subitem, 'booking_extras' => $extras, 'booking_date' => time(), 'booking_expiry' => time() + $expiry, 'booking_user' => $userid, 'booking_status' => 'unpaid', 'booking_additional_notes' => $additionalnotes, 'booking_total' => $grandtotal, 'booking_remaining' => $grandtotal, 'booking_checkin' => $checkin, 'booking_checkout' => $checkout, 'booking_nights' => $stay, 'booking_adults' => $adults, 'booking_child' => $child,
                 //    'booking_payment_type' => $paymethod,
                 'booking_deposit' => $deposit, 'booking_tax' => $tax, 'booking_paymethod_tax' => $paymethodfee, 'booking_extras_total_fee' => $extrasTotalFee, 'booking_curr_code' => $currCode, 'booking_curr_symbol' => $currSymbol, 'booking_extra_beds' => $extrabeds, 'booking_extra_beds_charges' => $extrabedscharges, 'booking_coupon_rate' => $couponRate, 'booking_coupon' => $couponCode, 'booking_guest_info' => $passportInfo);
+
             $this->db->insert('pt_bookings', $data);
-            $bookid = $this->db->insert_id();
+            $bookid = $this->db->insert_id();  
+
             $this->session->set_userdata("BOOKING_ID", $bookid);
             $this->session->set_userdata("REF_NO", $refno);
 
@@ -1118,6 +1132,31 @@ class Bookings_model extends CI_Model {
             elseif ($bookingtype == "cars") {
                 $cdata = array('booked_booking_id' => $bookid, 'booked_car_id' =>  $itemid, 'booked_pickupdate' => $checkin, 'booked_pickuptime' => $pickuptime, 'booked_pickuplocation' => $pickup, 'booked_dropofflocation' => $drop,'booked_dropoffDate' => databaseDate($dropdate), 'booked_dropoffTime' => $droptime, 'booked_booking_status' => 'unpaid');
                 $this->db->insert('pt_booked_cars', $cdata);
+            }
+            elseif($bookingtype == "pass"){
+                $fullname   = $this->input->post('firstname') . ' ' . $this->input->post('lastname');
+                $email      = $this->input->post('email');
+                if($userid){
+                    $this->load->model('Accounts_model');
+                    $user = $this->Accounts_model->get_profile_details($userid)[0];
+                    $fullname = $user->ai_first_name . ' ' . $user->ai_last_name;
+                    $email = $user->accounts_email;
+                }
+
+                $data = [
+                    'pass_id' => $this->input->post('itemid'),
+                    'booking_id' => $bookid,
+                    'quantity' => $this->input->post('quantity'),
+                    'total'		=> $this->input->post('quantity') * $this->input->post('price'),
+                    'fullname' => $fullname,
+                    'email' => $email,
+                    'phone' => $this->input->post('phone'),
+                    'address' => $this->input->post('address'),
+                    'country' => $this->input->post('country'),
+                    'notes' => $this->input->post('additionalnotes')
+                ];
+
+                $this->db->insert('pt_pass_booking', $data);
             }
 
             $url = base_url() . 'invoice?id=' . $bookid . '&sessid=' . $refno;
