@@ -1,5 +1,4 @@
-<?php var_dump($data); die(); ?>
-#<style>
+<style>
     .form-control {
         overflow: hidden;
         -webkit-appearance: none;
