@@ -191,12 +191,6 @@ class Home extends MX_Controller {
                     $this->load->helper("Tours/tours_front");
                     $this->load->model('Tours/Tours_model');
                 }
-                if (isModuleActive('pass')){
-                    $activeModules[] = "pass";
-                    $this->load->library('Pass/Pass_lib');
-                    $this->data['moduleTypes'] = $this->Pass_lib->passTypes();
-                    var_dump( $this->data['moduleTypes']); die();
-                }
                 if (isModuleActive('rentals')) {
                     $activeModules[] = "rentals";
 
@@ -251,6 +245,12 @@ class Home extends MX_Controller {
                     $this->data['defaultBoatsListForSearchField'] = $this->Boats_lib->getDefaultBoatsListForSearchField();
                     $this->load->helper("Boats/boats_front");
                     $this->load->model('Boats/Boats_model');
+                }
+
+                if (isModuleActive('pass')){
+                    $activeModules[] = "pass";
+                    $this->load->library('Pass/Pass_lib');
+                    $this->data['moduleTypes'] = $this->Pass_lib->passTypes();
                 }
 
                 if (isModuleActive('Amadeus')) {
