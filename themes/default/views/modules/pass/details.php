@@ -124,13 +124,12 @@
                     <?php if($appModule != "offers"){ ?>
                     <div class="o2">
                         <h2 id="detail-content-sticky-nav-00" class="name">
-                            <?php echo character_limiter($module->title, 50);?></h2>
+                            <?php echo character_limiter($module->name, 50);?></h2>
 
                         <div class="star-rating-wrapper">
                             <div class="rating-item rating-inline">
                                 <div class="rating-icons">
-                                    <?php echo $module->stars;?>
-                                    <!-- <input type="hidden" class="rating" data-filled="rating-icon fas fa-star rating-rated" data-empty="rating-icon far fa-star" data-fractions="2" data-readonly value="4.5"/> -->
+                                    <input type="hidden" class="rating" data-filled="rating-icon fas fa-star rating-rated" data-empty="rating-icon far fa-star" data-fractions="2" data-readonly value="5"/>
                                 </div>
                             </div>
                         </div>
@@ -158,7 +157,16 @@
         <div class="fullwidth-horizon-sticky d-none d-lg-block">
             <div class="fullwidth-horizon-sticky-inner">
                 <div class="container">
-
+                    <div class="fullwidth-horizon-sticky-item clearfix">
+                        <ul id="horizon-sticky-nav" class="horizon-sticky-nav clearfix">
+                            <li>
+                                <a href="#detail-content-sticky-nav-01"><?php echo trans('0248');?></a>
+                            </li>
+                            <li>
+                                <a href="#detail-content-sticky-nav-05"><?php echo trans('040');?></a>
+                            </li>
+                        </ul>
+                    </div>
                 </div>
             </div>
         </div>
@@ -206,8 +214,8 @@
                                                         name="quantity" class="changeInfo input-sm form-control"
                                                         id="quantity">
                                                     </input>
-                                                    <span class="price adultPrice"
-                                                        <strong><?php echo $curr->symbol;?> </strong><b class="money"><?php echo $module->ammount;?></b>
+                                                    <span class="price adultPrice" <strong><?php echo $curr->symbol;?>
+                                                        </strong><b class="money"><?php echo $module->ammount;?></b>
                                                     </span>
                                                 </div>
                                                 <!--  <a href="#" class="remove"><i class="fa fa-times"></i></a> -->
@@ -248,294 +256,50 @@
                 <div class="col-12 col-lg-8 col-xl-9">
                     <div class="content-wrapper">
                         <?php include $themeurl.'views/includes/copyURL.php';?>
+                        <div id="detail-content-sticky-nav-001" class="fullwidth-horizon-sticky-section tour-over">
+                            <h3 class="heading-title"><span>Note</span></h3>
+                            <div class="clear"></div>
+                            <?php echo $module->html_note; ?>
+                            <hr>
+                        </div>
                         <div id="detail-content-sticky-nav-01" class="fullwidth-horizon-sticky-section tour-over">
                             <h3 class="heading-title"><span><?php echo trans('0248'); ?></span></h3>
-                            <div class="clear"></div>
-
-                            <?php echo $module->desc ;?>
-
+                            <p><?php echo $module->name; ?></p>
+                            <p>Price: <?php echo $curr->symbol . ' ' . $module->ammount; ?></p>
+                            <p>Type: <?php echo ($module->type) ? 'International' : 'National'; ?></p>
+                            <p>Category: <?php echo $module->category_name; ?></p>
+                            <p>Note: <?php echo $module->note; ?></p>
                             <hr>
                         </div>
                         <div class="clear"></div>
-                        <div id="detail-content-sticky-nav-02" class="fullwidth-horizon-sticky-section"
-                            style="padding-top:0px">
-                            <script>
-                                $("form[name=fModifySearch]").submit(function (e) {
-                                    e.preventDefault();
-                                    var values = {};
-                                    $.each($(this).serializeArray(), function (i, field) {
-                                        values[field.name] = field.value;
-                                    });
-                                    redirectUrl = values.city + '/' + values.hotelname + '/' + values.checkin.replace(/\//g, '-') + '/' + values.checkout.replace(/\//g, '-') + '/' + values.adults + '/' + values.child;
-                                    window.location.href = '<?=base_url('hotels / detail / ')?>' + redirectUrl;
-                                });
-                            </script>
-                            <?php if($appModule == "offers"){  }else if($appModule == "cars" || $appModule == "hotels" || $appModule == "ean" || $appModule == "boats"){ ?>
-                            <!-- Start checkInInstructions -->
-                            <?php if(!empty($checkInInstructions)){ ?>
-                            <div class="panel panel-default">
-                                <div class="panel-heading go-text-right panel-green">
-                                    <?php echo trans('0550'); ?>
-                                </div>
-                                <?php }  if(!empty($checkInInstructions)){ ?>
-                                <div class="panel-body">
-                                    <span class="RTL">
-                                        <p>
-                                            <?php echo $checkInInstructions; ?>
-                                        </p>
-                                    </span>
-                                </div>
-                            </div>
-                            <?php } ?>
-                            <!-- end checkInInstructions -->
-                            <!-- Start SpecialcheckInInstructions -->
-                            <?php if(!empty($specialCheckInInstructions)){ ?>
-                            <div class="panel panel-default">
-                                <div class="panel-heading go-text-right panel-green">
-                                    <?php echo trans('0551'); ?>
-                                </div>
-                                <?php }  if(!empty($specialCheckInInstructions)){ ?>
-                                <div class="panel-body">
-                                    <span class="RTL">
-                                        <p>
-                                            <?php echo $specialCheckInInstructions; ?>
-                                        </p>
-                                    </span>
-                                </div>
-                            </div>
-                            <?php } ?>
-
-                            <?php if(!empty($packages)){ ?>
-                            <h3 class="heading-title"><span><?=lang('0278')?> <?=lang('0630')?></span></h3>
-
-                            <table class="table table-striped table-hover trip_dates" id="packages">
-                                <thead>
-                                    <tr>
-                                        <th> <?=lang('0273')?> - <?=lang('0274')?> - <?=lang('0560')?></th>
-                                        <th><?=lang('0275')?></th>
-                                        <th class="text-center"><?=lang('080')?></th>
-                                        <th class="text-center"><?=lang('0446')?></th>
-                                        <th class="text-center"><?=lang('070')?></th>
-                                        <th></th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-
-                                    <?php foreach ($packages as $package ) { ?>
-                                    <tr>
-                                        <td><i class="fa fa-calendar"></i> <?= $package->start_date ?>
-                                            <?= $package->from_day ?> <strong><?=lang('0274')?></strong>
-                                            <?= $package->end_date ?> <?= $package->to_day ?></td>
-                                        <td><i class="fa fa-moon"></i> <?= $package->stay ?> </td>
-                                        <td>
-                                            <p class="alert-primary btn btn-block">
-                                                <?= !empty($package->status) ? lang('0252') :lang('0519') ?></p>
-                                        </td>
-                                        <td class="text-center"><i class="fa fa-users"></i> <?= $package->travelers ?>
-                                        </td>
-                                        <td class="text-center"><strong><?= $package->price ?></strong></td>
-                                        <td><a href="#" class="btn btn-primary btn-sm btn-block"
-                                                onclick="show_model('<?=$package->id?>' )"><?=lang('0477')?></a></td>
-                                    </tr>
-                                    <?php } ?>
-
-                                </tbody>
-                            </table>
-                            <?php } ?>
-                            <!-- The Modal -->
-                            <div class="modal fade" id="packages_modal">
-                                <div class="modal-dialog"
-                                    style="width: 60%; max-width: 100%; z-index: 9999; margin-top: 145px; padding: 15px 15px 0px 30px;">
-                                    <div class="modal-content">
-                                        <!-- Modal Header -->
-                                        <div class="modal-header">
-                                            <h4 class="modal-title"><?=lang('Viator')?> <?=lang('0145')?></h4>
-                                            <button type="button" class="close" data-dismiss="modal">&times;</button>
-                                        </div>
-                                        <!-- Modal body -->
-                                        <div class="modal-body">
-                                            <form action="" id="send_enquery">
-                                                <input name="password" value="" hidden>
-                                                <input name="package_id" value="" id="package_id" hidden>
-                                                <input type="hidden" name="itemid_package" id="itemid_package"
-                                                    value="<?php echo $module->id; ?>" />
-                                                <div class="row">
-                                                    <div class="col-md-3">
-                                                        <?php if($appModule != "offers"){ ?>
-                                                        <div class="star-rating-wrapper">
-                                                            <div class="rating-item rating-inline">
-                                                                <div class="rating-icons">
-                                                                    <?php echo $module->stars;?>
-                                                                </div>
-                                                            </div>
-                                                        </div>
-                                                        <p><?php echo character_limiter($module->title, 28);?></p>
-                                                        <?php } ?>
-                                                        <div
-                                                            class="ml-lg-auto text-left text-lg-right mt-20 mt-lg-0 o1">
-                                                            <?php  if($item->price > 0){ ?>
-                                                            <div class="price">
-                                                                <span
-                                                                    class="text-secondary"><?php echo $item->currSymbol; ?><?php echo $item->price;?></span>
-                                                            </div>
-                                                            <?php } ?>
-                                                        </div>
-                                                        <div class="image"><img
-                                                                src="<?php echo $module->sliderImages[0]['fullImage']; ?>"
-                                                                alt="Images" /></div>
-                                                    </div>
-                                                    <div class="col-md-9">
-                                                        <div class="row gap-20 mb-0">
-                                                            <div class="col">
-                                                                <div class="form-group">
-                                                                    <label><?=lang('0350')?></label>
-                                                                    <input type="text" name="firstname" required
-                                                                        class="form-control"
-                                                                        placeholder="<?=lang('0350')?>">
-                                                                    <input type="hidden" name="lastname" required
-                                                                        class="form-control"
-                                                                        placeholder="<?=lang('0350')?>">
-                                                                </div>
-                                                            </div>
-                                                            <div class="col">
-                                                                <div class="form-group">
-                                                                    <label><?=lang('094')?></label>
-                                                                    <input type="text" name="email" required
-                                                                        class="form-control"
-                                                                        placeholder="<?=lang('094')?>">
-                                                                </div>
-                                                            </div>
-                                                        </div>
-                                                        <div class="row gap-20 mb-0">
-                                                            <div class="col">
-                                                                <div class="form-group">
-                                                                    <label><?=lang('092')?></label>
-                                                                    <input type="text" required name="phone"
-                                                                        class="form-control"
-                                                                        placeholder="<?=lang('092')?>">
-                                                                </div>
-                                                            </div>
-                                                            <div class="col">
-                                                                <div class="form-group">
-                                                                    <label><?="Address"?></label>
-                                                                    <input type="text" required name="address"
-                                                                        class="form-control" placeholder="Address">
-                                                                </div>
-                                                            </div>
-                                                        </div>
-                                                        <div class="row gap-20 mb-0"">
-                                                        <div class=" col">
-                                                            <button type="submit" id="ClickMyButton"
-                                                                class="btn btn-success btn-lg btn-block"><?=lang('0142')?></button>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                        </div>
-                                        </form>
-                                    </div>
-                                    <!-- Modal footer -->
-                                    <div class="modal-footer">
-                                        <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-
-
-
-
-
-                        <!-- End SpecialcheckInInstructions -->
-                        <div id="detail-content-sticky-nav-03" class="fullwidth-horizon-sticky-section">
-                            <h3 class="heading-title"><span><?=lang('0143')?></span></h3>
-                            <div class="clear"></div>
-                            <div class="hotel-detail-location-wrapper">
-                                <div class="row gap-30">
-                                    <div class="col-12 col-md-12">
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
                         <div id="detail-content-sticky-nav-05" class="fullwidth-horizon-sticky-section">
-                            <h3 class="heading-title"><span><?php echo trans('0148');?></span></h3>
+                            <h3 class="heading-title"><span>Privacy Policy</span></h3>
                             <div class="clear"></div>
                             <div class="feature-box-2 mb-0 bg-white">
                                 <div class="feature-row">
                                     <div class="row gap-10 gap-md-30">
                                         <div class="col-xs-12 col-sm-4 col-md-3 o2">
-                                            <h6><?php echo trans('0148');?></h6>
+                                            <h6>Privacy Policy</h6>
                                             <div class="clear"></div>
                                         </div>
                                         <div class="col-xs-12 col-sm-8 col-md-9 o1">
-                                            <p><?php if(!empty($module->policy)){ ?><?php echo $module->policy; } ?></p>
+                                            <p>Pass policy</p>
                                         </div>
                                     </div>
                                 </div>
-                                <?php } ?>
-                                <?php if(!empty($module->paymentOptions)){ ?>
                                 <div class="feature-row">
                                     <div class="row gap-10 gap-md-30">
                                         <div class="col-xs-12 col-sm-4 col-md-3 o2">
-                                            <h6><?php echo trans('0265');?></h6>
+                                            <h6>Payment Types</h6>
                                             <div class="clear"></div>
                                         </div>
                                         <div class="col-xs-12 col-sm-8 col-md-9 o1">
-                                            <p><?php foreach($module->paymentOptions as $pay){ if(!empty($pay->name)){ ?>
-                                                <?php echo $pay->name;?> -
-                                                <?php } } ?>
+                                            <p> Credit Card -
+                                                American Express -
+                                                Master/ Visa Card -
                                             </p>
                                         </div>
                                     </div>
-                                </div>
-                                <?php } ?>
-                            </div>
-                        </div>
-                        <div class="container">
-                            <div class="">
-                                <div class="clearfix"></div>
-                                <h4><?php echo $module->name; ?></h4>
-                                <p>Price: <?php echo $curr->symbol . ' ' . $module->ammount; ?></p>
-                                <p>Type: <?php echo ($module->type) ? 'International' : 'National'; ?></p>
-                                <p>Category: <?php echo $module->category_name; ?></p>
-                                <p>Note: <?php echo $module->note; ?></p>
-                                <!-- Start checkInInstructions -->
-                                <?php if(!empty($checkInInstructions)){ ?>
-                                <div class="panel panel-default">
-                                    <div class="panel-heading go-text-right panel-green">
-                                        <?php echo trans('0550'); ?>
-                                    </div>
-                                    <?php }  if(!empty($checkInInstructions)){ ?>
-                                    <div class="panel-body">
-                                        <span class="RTL">
-                                            <p>
-                                                <?php echo $checkInInstructions; ?>
-                                            </p>
-                                        </span>
-                                    </div>
-                                </div>
-                                <?php } ?>
-                                <!-- End checkInInstructions -->
-                                <!-- Start SpecialcheckInInstructions -->
-                                <?php if(!empty($specialCheckInInstructions)){ ?>
-                                <div class="panel panel-default">
-                                    <div class="panel-heading go-text-right panel-green">
-                                        <?php echo trans('0551'); ?>
-                                    </div>
-                                    <?php }  if(!empty($specialCheckInInstructions)){ ?>
-                                    <div class="panel-body">
-                                        <span class="RTL">
-                                            <p>
-                                                <?php echo $specialCheckInInstructions; ?>
-                                            </p>
-                                        </span>
-                                    </div>
-                                </div>
-                                <?php } ?>
-                                <!-- End  SpecialcheckInInstructions -->
-                                <!-- Start Tours Inclusions / Exclusions -->
-                                <div class="row">
-                                    <div class="clearfix"></div>
-                                    <hr>
                                 </div>
                             </div>
                         </div>

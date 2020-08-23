@@ -155,7 +155,7 @@ class Pass_model extends CI_Model {
 			$this->db->insert('pt_pass', $data);
 
 			$passid = $this->db->insert_id();
-
+			$this->add_translation($this->input->post('translated'),$passid);
 			return $passid;
 		}
 
@@ -418,25 +418,21 @@ class Pass_model extends CI_Model {
 		  foreach($postdata as $lang => $val){
 		     if(array_filter($val)){
 		        $title = $val['title'];
-                $desc = $val['desc'];
-                $metadesc = $val['metadesc'];
-				$kewords = $val['keywords'];
+				$desc = $val['desc'];
+				$keywords = $val['keywords'];
+				$metadesc = $val['metadesc'];
 
-                  $data = array(
-                'trans_title' => $title,
-                'trans_desc' => $desc,
-                'trans_meta_desc' => $metadesc,
-                'trans_keywords' => $kewords,
-                'item_id' => $id,
-                'trans_lang' => $lang
+				$data = array(
+					'trans_title' => $title,
+					'trans_desc' => $desc,
+					'metakeywords' => $keywords,
+					'metadesc' => $metadesc,
+					'item_id' => $id,
+					'trans_lang' => $lang
                 );
 				$this->db->insert('pt_pass_translation', $data);
-
                 }
-
-                }
-
-
+			}
 		}
 
         // Update translation of some fields data
