@@ -436,9 +436,9 @@ class Pass_model extends CI_Model {
 		}
 
         // Update translation of some fields data
-		function update_translation($postdata,$id){
+		function update_translation($passdata,$id){
 
-       foreach($postdata as $lang => $val){
+       foreach($passdata as $lang => $val){
 		     if(array_filter($val)){
 		        $title = $val['title'];
                 $desc = $val['desc'];
@@ -447,37 +447,26 @@ class Pass_model extends CI_Model {
                 $transAvailable = $this->getBackPassTranslation($lang,$id);
 
                 if(empty($transAvailable)){
-                 $data = array(
-                'trans_title' => $title,
-                'trans_desc' => $desc,
-                'trans_meta_desc' => $metadesc,
-                'trans_keywords' => $kewords,
-                'item_id' => $id,
-                'trans_lang' => $lang
-                );
-				$this->db->insert('pt_pass_translation', $data);
-
+					$data = array(
+						'trans_title' => $title,
+						'trans_desc' => $desc,
+						'metadesc' => $metadesc,
+						'metakeywords' => $kewords,
+						'item_id' => $id,
+						'trans_lang' => $lang
+					);
+					$this->db->insert('pt_pass_translation', $data);
                 }else{
-                 $data = array(
-                'content_page_title' => $title,
-                'content_body' => $desc,
-                'content_meta_desc' => $metadesc,
-                'content_meta_keywords' => $kewords,
-                );
-				$this->db->where('content_page_id', $id);
-				$this->db->where('content_lang_id', $lang);
-			    $this->db->update('pt_cms_content', $data);
 
-                 $data = array(
-                'trans_title' => $title,
-                'trans_desc' => $desc,
-                'trans_meta_desc' => $metadesc,
-                'trans_keywords' => $kewords,
-                       );
-				$this->db->where('item_id', $id);
-				$this->db->where('trans_lang', $lang);
-				$this->db->update('pt_pass_translation', $data);
-
+					$data = array(
+						'trans_title' => $title,
+						'trans_desc' => $desc,
+						'metadesc' => $metadesc,
+						'metakeywords' => $kewords,
+					);
+					$this->db->where('item_id', $id);
+					$this->db->where('trans_lang', $lang);
+					$this->db->update('pt_pass_translation', $data);
                 }
 
 

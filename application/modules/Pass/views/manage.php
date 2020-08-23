@@ -121,12 +121,13 @@
           </div>
           <!----Translation Tab---->
           <div class="tab-pane wow fadeIn animated in" id="TRANSLATE">
-            <?php foreach($languages as $lang => $val){ if($lang != "en"){ @$trans = getBackBlogTranslation($lang,$pdata[0]->post_id);  ?>
-            <div class="panel panel-default">
+            
+            <?php foreach($languages as $lang => $val){ if($lang != "en"){ @$trans = getBackPassTranslation($lang,$pass_data[0]->id);  ?>
+              <div class="panel panel-default">
               <div class="panel-heading"><img src="<?php echo PT_LANGUAGE_IMAGES.$lang.".png"?>" height="20" alt="" /> <?php echo $val['name']; ?></div>
               <div class="panel-body">
                 <div class="row form-group">
-                  <label class="col-md-2 control-label text-left">Post Title</label>
+                  <label class="col-md-2 control-label text-left">Pass Name</label>
                   <div class="col-md-10">
                     <input name='<?php echo "translated[$lang][title]"; ?>' type="text" placeholder="Post Title" class="form-control" value="<?php echo @$trans[0]->trans_title;?>" />
                   </div>
@@ -158,8 +159,7 @@
       </div>
       <div class="panel-footer">
         <input type="hidden" name="action" value="<?php echo $action;?>" />
-        <input type="hidden" id="postid" name="postid" value="<?php echo @$pdata[0]->post_id;?>" />
-        <input type="hidden" name="defimg" value="<?php echo @$pdata[0]->post_img; ?>" />
+        <input type="hidden" id="passid" name="passid" value="<?php echo @$pass_data[0]->id;?>" />
         <button class="btn btn-primary" type="submit">Submit</button>
       </div>
     </div>
