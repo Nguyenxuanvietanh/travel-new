@@ -130,48 +130,7 @@ $Viator_country = $ci->session->userdata('Viator_country');
             </div>
             <input type="hidden" name="searching" class="searching" value="<?php echo $_GET['searching']; ?>">
             <input type="hidden" class="modType" name="modType" value="<?php echo $_GET['modType']; ?>">
-            <script>
-
-                $("#textsearch").val("<?=(!empty($location))? $Viator_country."/".$location :''; ?>");
-
-                $(function () {
-                    $(".viatorsearch").select2({
-                        minimumInputLength: 3,
-                        width: '100%',
-                        maximumSelectionSize: 1,
-                        ajax: {
-                            url: "<?=base_url('home/suggestions_v2/hotels')?>", dataType: 'json', data: function (term) {
-                                return {q: term}
-                            }, results: function (data) {
-                                return {results: data}
-                            }
-                        },
-                        initSelection: function (element, callback) {
-                            callback({id: "<?=(!empty($location))? $Viator_country."/".$location :''; ?>", text: '<?=(!empty($location))? $Viator_country.",".$location :'Search by City Name'; ?>'})
-                        }
-                    });
-                    $(".viatorsearch").on("select2-selecting", function (e) {
-                        $("input[name=module_type]").val(e.object.module);
-                        $("input[name=slug]").val(e.object.id)
-                    });
-
-
-                })
-            </script>
-                <script>
-                    $("form").submit(function ( event ) {
-                        event.preventDefault();
-                        var textsearch = $("#textsearch").val();
-                        var startDate = $("#DateTours").val().replace(/\//g,"-");
-                        var endDate = $("#EndDateTours").val().replace(/\//g,"-");
-                        var arr = [textsearch,startDate,endDate];
-
-                        window.location.href = base_url + 'packages/search/' + arr.join("/");
-
-                        // var root = base_url + 'vtour/' + $("#textsearch").val() + "/" + startDate + "/" + endDate;
-                        // alert(root);
-                    });
-                </script>
+            
         </form>
     </div>
 </div>
