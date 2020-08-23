@@ -320,15 +320,16 @@ $this->Bookings_model->do_customer_booking();
 		}
 
 		function tourExtrasBooking(){
-        $this->load->library('Tours/Tours_lib');
-        $tourid = $this->input->post('itemid');
-        $adults = $this->input->post('adults');
-        $child = $this->input->post('children');
-        $infant = $this->input->post('infant');
-        $extras = $this->input->post('extras');
+		$this->load->library('Tours/Tours_lib');
+		$params = [
+			'tourid' => $this->input->post('itemid'),
+			'adults' => ($this->input->post('adults')) ? $this->input->post('adults') : 1,
+			'child' => ($this->input->post('children')) ? $this->input->post('children') : 0,
+			'infant' => ($this->input->post('infant')) ? $this->input->post('infant') : 0,
+			'extras' => $this->input->post('extras')
+		];
 
-
-        echo $this->Tours_lib->getUpdatedDataBookResultObject($tourid,$adults,$child,$infant,$extras);
+        echo $this->Tours_lib->getUpdatedDataBookResultObject($params);
 
 
        }

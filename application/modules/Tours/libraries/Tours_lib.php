@@ -277,6 +277,19 @@ class Tours_lib {
     }
     $this->db->where('tour_id', $tourid);
     $details = $this->db->get('pt_tours')->result();
+    $golf_detail = [];
+    if($details->type != 1){
+      $this->db->select('pt_tours.*, pt_golf_holes.hole, pt_golf_locations.location, pt_golf_times.time');
+      $this->db->join('pt_tours_type', 'pt_tours.type = pt_tours_type.id');
+      $this->db->join('pt_golf_holes', 'pt_tours.golf_hole_id = pt_golf_holes.id');
+      $this->db->join('pt_golf_locations', 'pt_tours.golf_location_id = pt_golf_locations.id');
+      $this->db->join('pt_golf_times', 'pt_tours.golf_time_id = pt_golf_times.id');
+      $this->db->where('tour_id', $tourid);
+      $details = $this->db->get('pt_tours')->result();
+      $golf_detail['hole']      = $details[0]->hole;
+      $golf_detail['location']  = $details[0]->location;
+      $golf_detail['time']      = $details[0]->time;
+    }
     $title = $this->get_title($details[0]->tour_title, $details[0]->tour_id);
     $stars = $details[0]->tour_stars;
     $desc = $this->get_description($details[0]->tour_desc, $details[0]->tour_id);
@@ -368,17 +381,82 @@ class Tours_lib {
     $this->setDeposit($curr->convertPriceFloat($totalCost, 2));
     $depositAmount = $this->deposit;
     $discount = $this->discount($tourid);
-    $detailResults = (object) array('id' => $details[0]->tour_id, 'title' => $title, 'slug' => $slug, 'bookingSlug' => $bookingSlug, 'thumbnail' => $thumbnail, 'stars' => pt_create_stars($stars), 'starsCount' => $stars, 'location' => $location, 'desc' => $desc, 'inclusions' => $inclusions, 'exclusions' => $exclusions, 'latitude' => $latitude, 'longitude' => $longitude, 'sliderImages' => $sliderImages, 'relatedItems' => $relatedTours, 'paymentOptions' => $paymentOptions, 'metadesc' => $metadesc, 'keywords' => $keywords, 'policy' => $policy, 'website' => $website, 'email' => $email, 'phone' => $phone, 'maxAdults' => $maxAdults, 'maxChild' => $maxChild, 'maxInfant' => $maxInfant, 'adultStatus' => $adultStatus, 'childStatus' => $childStatus, 'infantStatus' => $infantStatus, 'adultPrice' => $adultPrice, 'childPrice' => $childPrice, 'infantPrice' => $infantPrice, 'perAdultPrice' => $perAdultPrice, 'perChildPrice' => $perChildPrice, 'perInfantPrice' => $perInfantPrice, 'currCode' => $curr->code, 'currSymbol' => $curr->symbol, 'date' => $this->date, 'totalCost' => $curr->convertPrice($totalCost), 'comType' => $comm_type, 'comValue' => $comm_value, 'taxType' => $tax_type, 'taxValue' => $tax_value, 'tourDays' => $tourDays, 'tourhours' => $tourhours, 'tourNights' => $tourNights, 'totalDeposit' => $depositAmount, 'mapAddress' => $details[0]->tour_mapaddress, 'discount' =>$discount);
+    $detailResults = (object) array(
+      'id' => $details[0]->tour_id, 
+      'title' => $title, 
+      'slug' => $slug, 
+      'bookingSlug' => $bookingSlug, 
+      'thumbnail' => $thumbnail, 
+      'stars' => pt_create_stars($stars), 
+      'starsCount' => $stars, 
+      'location' => $location, 
+      'desc' => $desc, 
+      'inclusions' => $inclusions, 
+      'exclusions' => $exclusions, 
+      'latitude' => $latitude, 
+      'longitude' => $longitude, 
+      'sliderImages' => $sliderImages, 
+      'relatedItems' => $relatedTours, 
+      'paymentOptions' => $paymentOptions, 
+      'metadesc' => $metadesc, 
+      'keywords' => $keywords, 
+      'policy' => $policy, 
+      'website' => $website, 
+      'email' => $email, 
+      'phone' => $phone, 
+      'maxAdults' => $maxAdults, 
+      'maxChild' => $maxChild, 
+      'maxInfant' => $maxInfant, 
+      'adultStatus' => $adultStatus, 
+      'childStatus' => $childStatus,
+      'infantStatus' => $infantStatus, 
+      'adultPrice' => $adultPrice, 
+      'childPrice' => $childPrice, 
+      'infantPrice' => $infantPrice, 
+      'perAdultPrice' => $perAdultPrice, 
+      'perChildPrice' => $perChildPrice, 
+      'perInfantPrice' => $perInfantPrice, 
+      'currCode' => $curr->code, 
+      'currSymbol' => $curr->symbol, 
+      'date' => $this->date, 
+      'totalCost' => $curr->convertPrice($totalCost), 
+      'comType' => $comm_type, 
+      'comValue' => $comm_value, 
+      'taxType' => $tax_type, 
+      'taxValue' => $tax_value, 
+      'tourDays' => $tourDays, 
+      'tourhours' => $tourhours, 
+      'tourNights' => $tourNights, 
+      'totalDeposit' => $depositAmount, 
+      'mapAddress' => $details[0]->tour_mapaddress, 
+      'discount' =>$discount,
+      'type' => $details[0]->type,
+      'golf_hole_id' => $details[0]->golf_hole_id,
+      'golf_location_id' => $details[0]->golf_location_id,
+      'golf_time_id' => $details[0]->golf_time_id,
+      'golf' => $golf_detail
+    );
     return $detailResults;
   }
+
+
   function tour_short_details($tourid = 0) {
     if (empty($tourid)) {
       $tourid = $this->tourid;
     }
-    $this->db->select('tour_title,tour_stars,tour_slug,tour_desc,tour_privacy,tour_max_adults,tour_max_child,
-   tour_max_infant,tour_basic_price,tour_basic_discount,tour_adult_price,tour_child_price,tour_infant_price,tour_amenities,tour_exclusions,tour_days,tour_nights,thumbnail_image,tour_location,tour_latitude,tour_longitude,tour_type,tour_created_at');
+    $this->db->select('*');
     $this->db->where('tour_id', $tourid);
     $details = $this->db->get('pt_tours')->result();
+    if($details->type != 1){
+      $this->db->select('pt_tours.*, pt_golf_holes.hole as golf_hole, pt_golf_locations.location as golf_location, pt_golf_times.time as golf_time');
+      $this->db->join('pt_tours_type', 'pt_tours.type = pt_tours_type.id');
+      $this->db->join('pt_golf_holes', 'pt_tours.golf_hole_id = pt_golf_holes.id');
+      $this->db->join('pt_golf_locations', 'pt_tours.golf_location_id = pt_golf_locations.id');
+      $this->db->join('pt_golf_times', 'pt_tours.golf_time_id = pt_golf_times.id');
+      $this->db->where('tour_id', $tourid);
+      $details = $this->db->get('pt_tours')->result();
+    }
+    
     $this->stars = $details[0]->tour_stars;
     $this->title = $this->get_title($details[0]->tour_title, NULL);
     $this->desc = $this->get_description($details[0]->tour_desc, NULL);
@@ -392,7 +470,6 @@ class Tours_lib {
     $maxChild = $details[0]->tour_max_child;
     $maxInfant = $details[0]->tour_max_infant;
     $this->checkErrors($maxAdults, $maxChild, $maxInfant);
-//get country and city name for url slug
     $locationInfoUrl = pt_LocationsInfo($details[0]->tour_location);
     $countryName = url_title($locationInfoUrl->country, 'dash', true);
     $cityName = url_title($locationInfoUrl->city, 'dash', true);
@@ -400,7 +477,6 @@ class Tours_lib {
     $this->bookingSlug = $details[0]->tour_slug . $this->urlVars;
     $city = pt_LocationsInfo($details[0]->tour_location, $this->lang);
     $this->location = $city->city;
-//$details[0]->tour_location;
     $this->latitude = $details[0]->tour_latitude;
     $this->longitude = $details[0]->tour_longitude;
     $this->thumbnail = PT_TOURS_SLIDER_THUMB . $details[0]->thumbnail_image;
@@ -1111,9 +1187,9 @@ class Tours_lib {
     $this->ci->load->library('currconverter');
     $result = array();
     $curr = $this->ci->currconverter;
-//tour details for booking page
     $this->set_id($tourid);
     $this->tour_short_details();
+    $short_detail = $this->tour_short_details()[0];
     $extras = $this->tourExtras();
     if (empty($adults)) {
       $adults = $this->adults;
@@ -1129,15 +1205,50 @@ class Tours_lib {
     $infantPrice = $this->infantPrice * $infants;
     $totalSum = $adultPrice + $childPrice + $infantPrice;
     $subTotal = $curr->convertPriceFloat($adultPrice) + $curr->convertPriceFloat($childPrice) + $curr->convertPriceFloat($infantPrice);
-// $subTotal = $childPrice;
     $this->setTax($subTotal);
     $taxAmount = $curr->addComma($this->taxamount);
     $totalPrice = $subTotal + $this->taxamount;
     $price = $curr->addComma($totalPrice);
     $this->setDeposit($totalPrice);
     $depositAmount = $curr->addComma($this->deposit);
-    $result["tour"] = (object) array('id' => $this->tourid, 'title' => $this->title, 'slug' => base_url() . 'tours/' . $this->slug, 'thumbnail' => $this->thumbnail, 'stars' => pt_create_stars($this->stars), 'starsCount' => $this->stars, 'location' => $this->location, 'date' => $date, 'metadesc' => $this->metadesc, 'keywords' => $this->keywords, 'extras' => $extras, 'taxAmount' => $taxAmount, 'depositAmount' => $depositAmount, 'policy' => $this->policy, 'extraChkUrl' => $extrasCheckUrl, 'adults' => $adults, 'children' => $child, 'infants' => $infants, 'tourDays' => $this->tourDays, 'tourhours' => $this->tourhours, 'tourNights' => $this->tourNights, 'currCode' => $curr->code, 'currSymbol' => $curr->symbol, 'price' => $price, 'adultprice' => $curr->convertPrice($adultPrice), 'childprice' => $curr->convertPrice($childPrice), 'infantprice' => $curr->convertPrice($infantPrice), 'subTotal' => $subTotal);
-//end tour details for booking page
+    $result["tour"] = (object) array(
+      'id' => $this->tourid, 
+      'title' => $this->title, 
+      'slug' => base_url() . 'tours/' . $this->slug, 
+      'thumbnail' => $this->thumbnail, 
+      'stars' => pt_create_stars($this->stars), 
+      'starsCount' => $this->stars, 
+      'location' => $this->location, 
+      'date' => $date, 
+      'metadesc' => $this->metadesc, 
+      'keywords' => $this->keywords, 
+      'extras' => $extras, 
+      'taxAmount' => $taxAmount, 
+      'depositAmount' => $depositAmount, 
+      'policy' => $this->policy, 
+      'extraChkUrl' => $extrasCheckUrl, 
+      'adults' => $adults, 
+      'children' => $child, 
+      'infants' => $infants, 
+      'tourDays' => $this->tourDays, 
+      'tourhours' => $this->tourhours, 
+      'tourNights' => $this->tourNights, 
+      'currCode' => $curr->code, 
+      'currSymbol' => $curr->symbol, 
+      'price' => $price, 
+      'adultprice' => $curr->convertPrice($adultPrice), 
+      'childprice' => $curr->convertPrice($childPrice), 
+      'infantprice' => $curr->convertPrice($infantPrice), 
+      'subTotal' => $subTotal,
+      'type' => $short_detail->type,
+      'golf_hole_id' => $short_detail->golf_hole_id,
+      'golf_location_id' => $short_detail->golf_location_id,
+      'golf_time_id' => $short_detail->golf_time_id,
+      'golf_hole' => $short_detail->golf_hole,
+      'golf_location' => $short_detail->golf_location,
+      'golf_time' => $short_detail->golf_time,
+
+    );
     return $result;
   }
   function setDeposit($total) {
@@ -1175,13 +1286,18 @@ class Tours_lib {
     return $result;
   }
 //get updated values of booking data after extras and payment method updates
-  function getUpdatedDataBookResultObject($tourid, $adults = 1, $child = 0, $infant = 0, $extras) {
+  function getUpdatedDataBookResultObject($params) {
+    $tourid = $params['tourid'];
+    $adults = $params['adults'];
+    $child  = $params['child'];
+    $infant = $params['infant'];
+    $extras = $params['extras'];
     $this->ci->load->library('currconverter');
     $result = array();
     $curr = $this->ci->currconverter;
     $extratotal = $this->extrasFee($extras);
     $extTotal = $extratotal['extrasTotalFee'];
-    $paymethodTotal = 0; //$this->paymethodFee($this->ci->input->post('paymethod'),$total);
+    $paymethodTotal = 0;
     $this->set_id($tourid);
     $this->tour_short_details();
     $adultPrice = $this->adultPrice * $adults;
@@ -1195,7 +1311,6 @@ class Tours_lib {
     $this->setDeposit($grandTotal);
     $depositAmount = $this->deposit;
     $price = $grandTotal;
-//$perNight = $curr->convertPrice($roomprice['perNight'],0);
     $extrasHtml = "";
     foreach ($extratotal['extrasInfo'] as $einfo) {
       $extrasHtml .= "<tr class='allextras'><td>" . $einfo['title'] . "</td>
@@ -1216,7 +1331,7 @@ class Tours_lib {
     }
     $subitem = array("adults" => $adultsSubitem, "child" => $childSubitem, "infant" => $infantSubitem);
     $result = (object) array('grandTotal' => $price, 'taxAmount' => $taxAmount, 'depositAmount' => $depositAmount, 'extrashtml' => $extrasHtml, 'bookingType' => "tours", 'currCode' => $curr->code, 'stay' => 1, 'currSymbol' => $curr->symbol, 'subitem' => $subitem, 'extrasInfo' => $extratotal);
-//end tour details for booking page
+    //end tour details for booking page
     return json_encode($result);
   }
   public function checkErrors($maxAdults, $maxChild, $maxInfant) {

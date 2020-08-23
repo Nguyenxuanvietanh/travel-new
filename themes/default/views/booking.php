@@ -912,6 +912,12 @@
                                                         <li><b> <?php echo trans('0271');?> <?php echo trans('0275');?></b><span class="float-right"><?php echo $module->tourDays;?></span></li>
                                                         <li><b> <?php echo trans('0271');?> <?php echo trans('0122');?></b><span class="float-right"><?php echo $module->tourNights;?></span></li>
                                                     <?php } ?>
+                                                    <?php if($module->type != 1){ ?>
+                                                        <hr>
+                                                        <li><b>Golf hole: </b><span class="float-right"><?php echo $module->golf_hole; ?></span></li>
+                                                        <li><b>Golf location: </b><span class="float-right"><?php echo $module->golf_location; ?></span></li>
+                                                        <li><b>Golf time: </b><span class="float-right"><?php echo $module->golf_time; ?></span></li>
+                                                    <?php } ?>
                                                 </ul>
                                                 <div class="clear"></div>
                                                 <div class="hotel-room-sm-item mb-20">

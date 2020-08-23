@@ -234,10 +234,16 @@
                         <div id="detail-content-sticky-nav-01" class="fullwidth-horizon-sticky-section tour-over">
                             <h3 class="heading-title"><span><?php echo trans('0248'); ?></span></h3>
                             <div class="clear"></div>
-
                             <?php echo $module->desc ;?>
-
                             <hr>
+                            <?php if($module->type != 1){ ?>
+                                <h3 class="heading-title"><span>Golf Detail</span></h3>
+                                <div class="clear"></div>
+                                <h6>Holes: <b><?php echo $module->golf['hole'] ;?></b></h6>
+                                <h6>Location: <b><?php echo $module->golf['location'] ;?></b></h6>
+                                <h6>Time: <b><?php echo $module->golf['time'] ;?></b></h6>
+                            <hr>
+                            <?php } ?>
                         </div>
                         <div class="clear"></div>
                         <div id="detail-content-sticky-nav-02" class="fullwidth-horizon-sticky-section" style="padding-top:0px">

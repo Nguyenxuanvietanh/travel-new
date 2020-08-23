@@ -84,23 +84,12 @@ class Tours extends MX_Controller {
         $this->data['loadMap'] = TRUE;
 
         if ($this->validlang) {
-            //$countryName = $this->uri->segment(3);
-
-            //$cityName = $this->uri->segment(4);
-
             $tourslug = $this->uri->segment(5);
         } else {
-
-            // $countryName = $this->uri->segment(2);
-
-            // $cityName = $this->uri->segment(3);
-
             $tourslug = $this->uri->segment(4);
         }
 
         $check = $this->Tours_model->tour_exists($tourslug);
-
-
 
         if ($check && !empty($tourslug)) {
             $this->lang->load("front", $this->data['lang_set']);
@@ -108,6 +97,7 @@ class Tours extends MX_Controller {
             $this->Tours_lib->set_tourid($tourslug);
 
             $this->data['module'] = $this->Tours_lib->tour_details();
+
              $this->data['packages'] = $this->Tours_model->getpackages($this->data['module']->id);
              foreach ($this->data['packages'] as &$dates){
                  if($dates->fix_dates  == "yes"){
@@ -158,7 +148,6 @@ class Tours extends MX_Controller {
             //$this->data['checkoutDay'] = date("d",convert_to_unix($this->Tours_lib->checkout));
 
             $this->data['langurl'] = base_url() . "tours/{langid}/" . $this->data['module']->slug;
-
             $this->setMetaData($this->data['module']->title, $this->data['module']->metadesc, $this->data['module']->keywords);
 
             $this->theme->view('modules/tours/standard/details', $this->data, $this);
@@ -458,12 +447,6 @@ class Tours extends MX_Controller {
 
         $this->data['hideHeader'] = "1";
 
-        //echo "<pre>";
-
-        //print_r($this->Paymentgateways->getAllGateways());
-
-        //echo "</pre>";
-
         if ($check && !empty($tourslug)) {
             $this->lang->load("front", $this->data['lang_set']);
 
@@ -482,14 +465,6 @@ class Tours extends MX_Controller {
             $this->data['extraChkUrl'] = $bookInfo['tour']->extraChkUrl;
 
             $this->data['totalGuests'] = $this->Tours_lib->guestCount;
-
-            /* if($this->data['room']->price < 1 ||  $this->data['room']->stay < 1){
-
-            $this->data['error'] = "error";
-
-            }*/
-
-            //  $this->data['paymentTypes'] = $this->Payments_model->get_all_payments_front();
 
             $this->load->model('Admin/Accounts_model');
 
