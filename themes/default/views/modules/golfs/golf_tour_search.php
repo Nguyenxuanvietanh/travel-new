@@ -7,7 +7,7 @@
 </style>
 <div class="ftab-inner menu-horizontal-content">
 <div class="form-search-main-01">
-<form autocomplete="off" action="<?php echo base_url() . $module; ?>/search" method="GET" role="search">
+<form autocomplete="off" action="<?php echo base_url(); ?>tours/search" method="GET" role="search">
     <div class="form-inner">
         <div class="row gap-10 mb-20 row-reverse">
             <div class="col-lg-3 col-xs-12">
