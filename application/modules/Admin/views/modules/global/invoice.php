@@ -689,7 +689,7 @@
                   </li>
                   <li class="clearfix">
                     <span class="font-weight-bold"> Type</span>
-                    <span><?php echo ($item->type) ? 'InterNational' : 'National'; ?></span>
+                    <span><?php echo ($item->type == 1) ? 'National' : 'InterNational'; ?></span>
                   </li>
                   <li class="clearfix">
                     <span class="font-weight-bold"> Category</span>

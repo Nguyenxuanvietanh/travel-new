@@ -1284,7 +1284,20 @@ if (!function_exists('info_general')) {
 		}
 
 	}
+if (!function_exists('getBackPassTranslation')) {
 
+	function getBackPassTranslation($lang, $id) {
+		if(!empty($id)){
+			$CI = get_instance();
+			$CI->load->model('Pass/Pass_model');
+			$res = $CI->Pass_model->getBackPassTranslation($lang,$id);
+			return $res;
+		}else{
+			return '';
+		}
+
+	}
+}
 }if (!function_exists('getBlogCategoriesTranslation')) {
 
 	function getBlogCategoriesTranslation($lang, $id) {

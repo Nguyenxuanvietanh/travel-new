@@ -38,10 +38,10 @@
                                         <div class="clear"></div>
                                         <div class="form-icon-left">
                                             <select class="chosen-the-basic form-control" name="type" id="type">
-                                                <option value="0" selected>
+                                                <option value="1" selected>
                                                     National
                                                 </option>
-                                                <option value="1" selected>
+                                                <option value="2" selected>
                                                     International
                                                 </option>
                                             </select>

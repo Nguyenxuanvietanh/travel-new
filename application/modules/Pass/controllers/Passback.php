@@ -71,13 +71,18 @@ class Passback extends MX_Controller {
 		$this->load->helper('xcrud');
 		$xcrud = xcrud_get_instance();
 		$xcrud->table('pt_pass');
+		$xcrud->join('category_id','pt_pass_categories','id');
+		$xcrud->columns('name,status,sales_date,type,pt_pass_categories.name,note');
 		$xcrud->label('name', 'Name')
 				->label('sales_date', 'Sales date')
 				->label('type', 'Type')
-				->label('category_id', 'Category')
+				->label('pt_pass_categories.name', 'Category')
 				->label('note', 'Notes')
 				->label('html_note', 'HTML Notes');
-		$xcrud->column_callback('sales_date', 'fmtDateTime');
+		$xcrud->column_callback('sales_date', 'fmtDate');
+		$xcrud->column_callback('type', function($type){
+			return ($type == 1) ? 'National' : 'InterNational';
+		});
 
 		if ($this->editpermission) {
 			$xcrud->button(base_url() . $this->data['adminsegment'] . '/pass/manage/{id}', 'Edit', 'fa fa-edit', 'btn btn-warning', array('target' => '_self'));
@@ -148,12 +153,13 @@ class Passback extends MX_Controller {
 		if (empty ($id)) {
 			redirect('admin/pass');
 		}
-		$updatepost = $this->input->post('action');
+		
+		$updatepass = $this->input->post('action');
 		
 		$this->data['action'] = "update";
-		if ($updatepost == "update" ) {
+		if ($updatepass == "update" ) {
 			$this->Pass_model->update_pass($id);
-			$this->session->set_flashdata('flashmsgs', 'Post Updated Successfully');
+			$this->session->set_flashdata('flashmsgs', 'Pass Updated Successfully');
 			redirect('admin/pass');
 		}
 		else {
@@ -162,11 +168,9 @@ class Passback extends MX_Controller {
 				redirect('admin/pass');
 			}
 
-			$this->data['related_selected'] = explode(",", $this->data['pdata'][0]->post_related);
-			// $this->data['all_posts'] = $this->Pass_model->select_related_posts($this->data['pdata'][0]->id);
 			$this->data['categories'] = $this->Pass_model->get_enabled_categories();
 			$this->data['main_content'] = 'Pass/manage';
-			$this->data['page_title'] = 'Manage Post';
+			$this->data['page_title'] = 'Manage Pass';
 			$this->load->view('Admin/template', $this->data);
 		}
 	}
