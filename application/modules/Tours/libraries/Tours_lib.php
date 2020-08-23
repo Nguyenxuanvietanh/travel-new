@@ -114,18 +114,24 @@ class Tours_lib {
     $this->langdef = DEFLANG;
   }
 
-  public function getDefaultToursListForSearchField()
+  public function getDefaultToursListForSearchField($type = null)
   {
-      $tours = $this->db->select('tour_id AS id, tour_title AS text, "tour" AS module, "false" AS disabled')->get('pt_tours')->result();
-      $locations = $this->db->query("
-        SELECT pt_locations.id AS id, CONCAT(country, ', ', location) AS text, 'location' AS `module`, 'false' AS disabled 
-        FROM `pt_tour_locations` 
-        JOIN pt_locations ON pt_locations.id = pt_tour_locations.location_id
-        WHERE `tour_id` IN (
-            SELECT tour_id FROM `pt_tours`
-        )
-        GROUP BY pt_locations.id
-      ")->result();
+      $tour_query = 'SELECT tour_id AS id, tour_title AS text, "tour" AS module, "false" AS disabled FROM `pt_tours`';
+      if(!$type){
+        $tour_query .= " WHERE `type` = '1'";
+      }
+      $tours = $this->db->query($tour_query)->result();
+
+      $query = "SELECT pt_locations.id AS id, CONCAT(country, ', ', location) AS text, 'location' AS `module`, 'false' AS disabled 
+      FROM `pt_tour_locations` 
+      JOIN pt_locations ON pt_locations.id = pt_tour_locations.location_id
+      WHERE `tour_id` IN (SELECT tour_id FROM `pt_tours`";
+      if(!$type){
+        $query .= " WHERE type=1";
+      }
+      $query .= ") GROUP BY pt_locations.id";
+
+      $locations = $this->db->query($query)->result();
 
       $resultin_array = [
           ["text" => "Tours", "children" => $tours],

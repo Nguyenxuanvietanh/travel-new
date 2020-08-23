@@ -34,7 +34,7 @@
                             <option value="" selected>
                             <?php echo trans('0158'); ?>
                             </option>
-                            <?php foreach ($data['moduleTypes'] as $ttype) { ?>
+                            <?php foreach ($data['tourTypes'] as $ttype) { ?>
                             <option value="<?php echo $ttype->id; ?>" <?php makeSelected($tourType, $ttype->id); ?> >
                                 <?php echo $ttype->name; ?>
                             </option>

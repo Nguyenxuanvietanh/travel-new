@@ -173,7 +173,7 @@ class Home extends MX_Controller {
                     $this->data['featuredTours'] = $this->Tours_lib->getFeaturedTours();
                     // $this->data['countryFeaturedTours'] = $this->Tours_lib->getCountryFeaturedTours();
                     $this->data['popularTours'] = $this->Tours_lib->getTopRatedTours();
-                    $this->data['moduleTypes'] = $this->Tours_lib->tourTypes();
+                    $this->data['tourTypes'] = $this->Tours_lib->tourTypes();
                     $this->data['checkin'] = $this->Tours_lib->date;
                     $this->data['adults'] = $this->Tours_lib->adults;
                     $this->data['child'] = (int)$this->Tours_lib->child;
@@ -249,6 +249,7 @@ class Home extends MX_Controller {
                     $this->load->helper("Boats/boats_front");
                     $this->load->model('Boats/Boats_model');
                 }
+
                 if (isModuleActive('Amadeus')) {
                     $moduleSetting = $this->App->service("ModuleService")->get("Amadeus");
                     $this->load->model('Amadeus/FlightsSearchModel');

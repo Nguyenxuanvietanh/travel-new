@@ -193,7 +193,8 @@ class Tours_model extends CI_Model {
 					$stars = 0;
 				}
 
-				$data = array('tour_title' => $this->input->post('tourname'),
+				$data = array(
+					'tour_title' => $this->input->post('tourname'),
 					'tour_slug' => $tourslug, 'tour_desc' => $this->input->post('tourdesc'),
 					'tour_stars' => intval($stars),
 					'tour_is_featured' => $featured,
@@ -205,8 +206,6 @@ class Tours_model extends CI_Model {
 					'tour_latitude' => $this->input->post('latitude'),
 					'tour_longitude' => $this->input->post('longitude'),
 					'tour_mapaddress' => $this->input->post('tourmapaddress'),
-	                //'tour_basic_price' => $this->input->post('basic'),
-					//'tour_basic_discount' => $this->input->post('discount'),
 					'tour_meta_title' => $this->input->post('tourmetatitle'),
 					'tour_meta_keywords' => $this->input->post('tourkeywords'),
 					'tour_meta_desc' => $this->input->post('tourmetadesc'), 'tour_amenities' => $amenities,
@@ -233,7 +232,12 @@ class Tours_model extends CI_Model {
 					'tour_website' => $this->input->post('tourwebsite'),
 					'tour_fulladdress' => $this->input->post('tourfulladdress'),
 					'tour_featured_forever' => $isforever,
-					'tour_created_at' => time());
+					'tour_created_at' => time(),
+					'type' => $this->input->post('type'),
+					'golf_hole_id' => $this->input->post('golf_hole'),
+					'golf_location_id' => $this->input->post('golf_location'),
+					'golf_time_id' => $this->input->post('golf_time')
+				);
 				$this->db->insert('pt_tours', $data);
 				$tourid = $this->db->insert_id();
 				$this->updateTourLocations($this->input->post('locations'), $tourid);
@@ -353,7 +357,12 @@ class Tours_model extends CI_Model {
 					'tour_phone' => $this->input->post('tourphone'),
 					'tour_website' => $this->input->post('tourwebsite'),
 					'tour_fulladdress' => $this->input->post('tourfulladdress'),
-					'tour_featured_forever' => $isforever);
+					'tour_featured_forever' => $isforever,
+					'type' => $this->input->post('type'),
+					'golf_hole_id' => $this->input->post('golf_hole'),
+					'golf_location_id' => $this->input->post('golf_location'),
+					'golf_time_id' => $this->input->post('golf_time')
+				);
 				$this->db->where('tour_id', $id);
 				$this->db->update('pt_tours', $data);
 
@@ -1270,5 +1279,33 @@ $this->db->join('pt_tour_images','pt_tours.tour_id = pt_tour_images.timg_tour_id
         public function suppilertour($owned_id){
             $this->db->where('tour_owned_by',$owned_id);
             return $this->db->get('pt_tours')->result();
-        }
+		}
+		
+		public function get_tour_types($id = null){
+			if($id){
+				$this->db->where('id',$id);
+			}
+            return $this->db->get('pt_tours_type')->result();
+		}
+
+		public function get_golf_locations($id = null){
+			if($id){
+				$this->db->where('id',$id);
+			}
+            return $this->db->get('pt_golf_locations')->result();
+		}
+
+		public function get_golf_holes($id = null){
+			if($id){
+				$this->db->where('id',$id);
+			}
+            return $this->db->get('pt_golf_holes')->result();
+		}
+
+		public function get_golf_times($id = null){
+			if($id){
+				$this->db->where('id',$id);
+			}
+            return $this->db->get('pt_golf_times')->result();
+		}
 }

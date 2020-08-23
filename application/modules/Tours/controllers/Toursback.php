@@ -191,7 +191,10 @@ class Toursback extends MX_Controller {
 						$this->data['all_tours'] = $this->Tours_model->select_related_tours($this->data['userloggedin']);
 
 						$this->load->model('Admin/Locations_model');
-
+						$this->data['tour_types'] = $this->Tours_model->get_tour_types();
+						$this->data['golf_locations'] = $this->Tours_model->get_golf_locations();
+						$this->data['golf_holes'] = $this->Tours_model->get_golf_holes();
+						$this->data['golf_times'] = $this->Tours_model->get_golf_times();
 						//$this->data['locations'] = $this->Locations_model->getLocationsBackend();
 
 						$this->data['main_content'] = 'Tours/manage';
@@ -278,6 +281,10 @@ class Toursback extends MX_Controller {
 				$updatetour = $this->input->post('submittype');
 				$this->data['submittype'] = "update";
 				$tourid = $this->input->post('tourid');
+				$this->data['tour_types'] = $this->Tours_model->get_tour_types();
+				$this->data['golf_locations'] = $this->Tours_model->get_golf_locations();
+				$this->data['golf_holes'] = $this->Tours_model->get_golf_holes();
+				$this->data['golf_times'] = $this->Tours_model->get_golf_times();
 				if (!empty ($updatetour)) {
 						$this->form_validation->set_rules('tourname', 'Tour Name', 'trim|required');
 						$this->form_validation->set_rules('tourtype', 'Tour Type', 'trim|required');
@@ -298,9 +305,6 @@ class Toursback extends MX_Controller {
 							echo "done";
 
 							}
-
-
-
 						}
 				}
 				else {
