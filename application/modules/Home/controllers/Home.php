@@ -173,7 +173,7 @@ class Home extends MX_Controller {
                     $this->data['featuredTours'] = $this->Tours_lib->getFeaturedTours();
                     // $this->data['countryFeaturedTours'] = $this->Tours_lib->getCountryFeaturedTours();
                     $this->data['popularTours'] = $this->Tours_lib->getTopRatedTours();
-                    $this->data['tourTypes'] = $this->Tours_lib->tourTypes();
+                    $this->data['moduleTypes'] = $this->Tours_lib->tourTypes();
                     $this->data['checkin'] = $this->Tours_lib->date;
                     $this->data['adults'] = $this->Tours_lib->adults;
                     $this->data['child'] = (int)$this->Tours_lib->child;
@@ -190,6 +190,12 @@ class Home extends MX_Controller {
                     $this->data['defaultToursListForSearchField'] = $this->Tours_lib->getDefaultToursListForSearchField();
                     $this->load->helper("Tours/tours_front");
                     $this->load->model('Tours/Tours_model');
+                }
+                 if (isModuleActive('Tour Golf')){
+                    $activeModules[] = "tour_golf";
+                    $this->load->library('Tours/Tours_lib');
+                    $this->data['defaultGolfToursListForSearchField'] = $this->Tours_lib->getDefaultGolfToursListForSearchField();
+                   
                 }
                 if (isModuleActive('rentals')) {
                     $activeModules[] = "rentals";
@@ -249,7 +255,6 @@ class Home extends MX_Controller {
                     $this->load->helper("Boats/boats_front");
                     $this->load->model('Boats/Boats_model');
                 }
-
                 if (isModuleActive('Amadeus')) {
                     $moduleSetting = $this->App->service("ModuleService")->get("Amadeus");
                     $this->load->model('Amadeus/FlightsSearchModel');

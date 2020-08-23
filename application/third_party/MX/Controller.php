@@ -59,7 +59,6 @@ class MX_Controller
         $ordernumber = array();
         $modulesname = array();
 
-
         foreach ($this->data['modulesList'] as $index => $module) {
             if ($module->ia_active == 1 && $module->parent_id == 'hotels') {
                 if ($module->name == 'Hotels') {
@@ -137,6 +136,22 @@ class MX_Controller
                     $modulename = $module->name;
                     array_push($ordernumber, $module->order);
                     $namestore = array('link' => 'pass', 'foldername' => 'pass', 'name' => 'Pass', 'order' => $module->order, 'slug' => $module->slug, 'module_name' => $modulename);
+                    array_push($modulesname, $namestore);
+                }
+            }
+            if ($module->ia_active == 1 && $module->parent_id == 'tour_golf') {
+                if ($module->name == 'Golf') {
+                    $modulename = $module->name;
+                    array_push($ordernumber, $module->order);
+                    $namestore = array('link' => 'golf_tour', 'foldername' => 'golf_tour', 'name' => 'Golf', 'order' => $module->order, 'slug' => $module->slug, 'module_name' => $modulename);
+                    array_push($modulesname, $namestore);
+                }
+            }
+            if ($module->ia_active == 1 && $module->parent_id == 'golf_booking') {
+                if ($module->name == 'Golf Booking') {
+                    $modulename = $module->name;
+                    array_push($ordernumber, $module->order);
+                    $namestore = array('link' => 'golf_booking', 'foldername' => 'golf_booking', 'name' => 'Golf Booking', 'order' => $module->order, 'slug' => $module->slug, 'module_name' => $modulename);
                     array_push($modulesname, $namestore);
                 }
             }

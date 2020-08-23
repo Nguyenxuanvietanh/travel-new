@@ -69,6 +69,24 @@
                                             <?php } ?>
                                         </div>
                                     <?php }
+                                     if ($module->ia_active == 1 && $module->parent_id == 'tour_golf') { ?>
+                                        <!-- Tours  -->
+                                        <div role="tabpanel" class="tab-pane <?php if ($order == $module->order) {
+                                            echo "active in show";
+                                        } ?>" id="golf_tour" aria-labelledby="home-tab">
+
+                                             <?php echo searchForm('tour_golf', $data); ?>
+                                        </div>
+
+                                    <?php }
+                                      if ($module->ia_active == 1 && $module->parent_id == 'golf_booking') { ?>
+                                        <div role="tabpanel" class="tab-pane <?php if ($order == $module->order) {
+                                            echo "active in show"; } ?>" id="golf_booking" aria-labelledby="home-tab">
+                                            <?php
+                                                searchForm('golf_booking',$data);
+                                            ?>
+                                        </div>
+                                    <?php }
                                     if ($module->ia_active == 1 && $module->parent_id == 'hotels') { ?>
                                         <!-- Hotels  -->
                                         <div role="tabpanel" class="tab-pane <?php if ($order == $module->order) {
@@ -144,6 +162,7 @@
                                             <?php if (isModuleActive('ivisa')) { ?><?php echo searchForm('ivisa', $data); ?><?php } ?>
                                         </div>
                                     <?php }
+                                     
                                 } ?>
 
                                 <!--

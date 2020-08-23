@@ -22,13 +22,17 @@
         $locationData = $toursLib->toursByLocations($totalLocations);
         return $locationData;
       }
-    }
+    } 
 
     //Tours locations part on home page
     if (!function_exists('searchForm'))
     {
         function searchForm($module = "hotels", $data = NULL)
         {
+             if ($module == "golf") {
+                $golfsearch = $data; 
+                require $themeurl.'views/modules/golfs/main_search.php'; 
+              }
             $appObj = appObj();
             $themeData = (object) $appObj->theme->_data;
             //$themeData->checkin = date($themeData->app_settings[0]->date_f,strtotime('+'.CHECKIN_SPAN.' day', time()));
@@ -46,7 +50,12 @@
             $themeData->ctcheckin = date("m/d/Y", strtotime("+1 days"));
             $themeData->ctcheckout = date("m/d/Y", strtotime("+2 days"));
             $tourType = @ $_GET['type'];
-
+              if ($module == "golf_booking") {
+                  $golfsearch = $data; require $themeurl.'views/modules/golfs/main_search.php'; 
+                }
+              if ($module == "tour_golf") {
+                  $golfsearch = $data; require $themeurl.'views/modules/golfs/golf_tour_search.php'; 
+                }
             if (isModuleActive($module))
             {
                // ** Hotels ** //
@@ -76,6 +85,7 @@
 
                // ** Tours ** //
                if ($module == "tours") {$toursearch = $data; require $themeurl.'views/modules/tours/standard/search.php'; }
+
                if ($module == "Viator") {$toursearch = $data; require $themeurl.'views/modules/tours/viator/search.php'; }
 
                // ** Rentals ** //

@@ -140,7 +140,26 @@ class Tours_lib {
 
       return json_encode($resultin_array);
   }
+ public function getDefaultGolfToursListForSearchField()
+  { 
+      $tours = $this->db->select('tour_id AS id, tour_title AS text, "tour" AS module, "false" AS disabled')->where('type', '2')->get('pt_tours')->result();
+      $locations = $this->db->query("
+        SELECT pt_locations.id AS id, CONCAT(country, ', ', location) AS text, 'location' AS `module`, 'false' AS disabled 
+        FROM `pt_tour_locations` 
+        JOIN pt_locations ON pt_locations.id = pt_tour_locations.location_id
+        WHERE `tour_id` IN (
+            SELECT tour_id FROM `pt_tours`
+        )
+        GROUP BY pt_locations.id
+      ")->result();
 
+      $resultin_array = [
+          ["text" => "Tours", "children" => $tours],
+          // ["text" => "Locations", "children" => $locations]
+      ];
+
+      return json_encode($resultin_array);
+  }
   function set_tourid($tourslug) {
     $this->db->select('tour_id');
     $this->db->where('tour_slug', $tourslug);
