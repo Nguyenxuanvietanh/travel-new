@@ -664,7 +664,7 @@ class Bookings_model extends CI_Model {
     // ============================== End: Bookings ======================================
 
     function do_booking($userid) {
-
+        
         $error = true;
         $this->load->library('currconverter');
         $itemid = $this->input->post('itemid');
@@ -906,11 +906,21 @@ class Bookings_model extends CI_Model {
                 }else{
                     $checkin = date($this->data['app_settings'][0]->date_f, strtotime($apiDate));
                     $checkout = date($this->data['app_settings'][0]->date_f, strtotime($apiDate));
-
-
                 }
                 $this->load->library('Tours/Tours_lib');
                 $bookingData = json_decode($this->Tours_lib->getUpdatedDataBookResultObject($itemid, $adults,$child,$infant,$extras));
+
+                $type = $this->input->post('type');
+                if($type != 1){
+                    $bookingData->subitem->golf = (object) [
+                        'golf_hole_id'      => $this->input->post('golf_hole_id'),
+                        'golf_location_id'  => $this->input->post('golf_location_id'),
+                        'golf_time_id'      => $this->input->post('golf_time_id'),
+                        'golf_hole'         => $this->input->post('golf_hole'),
+                        'golf_location'     => $this->input->post('golf_location'),
+                        'golf_time'         => $this->input->post('golf_time')
+                    ];
+                }
                 $error = false;
 
                 // Passengers passport detail
@@ -1053,11 +1063,7 @@ class Bookings_model extends CI_Model {
             $bookingData = json_decode($this->Cars_lib->getUpdatedDataBookResultObject($itemid,$extras,$pickup,$drop,$pickupdate,$dropdate));
             $error = false;
         }
-        
 
-
-
-        // $grandtotal = $this->currconverter->convertPriceFloat($bookingData->grandTotal);
         $grandtotal = $this->currconverter->removeComma($bookingData->grandTotal);
         $checkin = databaseDate($checkin);
         $checkout = databaseDate($checkout);
@@ -1113,9 +1119,36 @@ class Bookings_model extends CI_Model {
             $error = false;
         }
         if (!$error) {
-            $data = array('booking_ref_no' => $refno, 'booking_type' => $bookingtype, 'booking_item' => $itemid, 'booking_subitem' => $subitem, 'booking_extras' => $extras, 'booking_date' => time(), 'booking_expiry' => time() + $expiry, 'booking_user' => $userid, 'booking_status' => 'unpaid', 'booking_additional_notes' => $additionalnotes, 'booking_total' => $grandtotal, 'booking_remaining' => $grandtotal, 'booking_checkin' => $checkin, 'booking_checkout' => $checkout, 'booking_nights' => $stay, 'booking_adults' => $adults, 'booking_child' => $child,
-                //    'booking_payment_type' => $paymethod,
-                'booking_deposit' => $deposit, 'booking_tax' => $tax, 'booking_paymethod_tax' => $paymethodfee, 'booking_extras_total_fee' => $extrasTotalFee, 'booking_curr_code' => $currCode, 'booking_curr_symbol' => $currSymbol, 'booking_extra_beds' => $extrabeds, 'booking_extra_beds_charges' => $extrabedscharges, 'booking_coupon_rate' => $couponRate, 'booking_coupon' => $couponCode, 'booking_guest_info' => $passportInfo);
+            $data = array(
+                'booking_ref_no' => $refno, 
+                'booking_type' => $bookingtype, 
+                'booking_item' => $itemid, 
+                'booking_subitem' => $subitem, 
+                'booking_extras' => $extras, 
+                'booking_date' => time(), 
+                'booking_expiry' => time() + $expiry, 
+                'booking_user' => $userid, 
+                'booking_status' => 'unpaid', 
+                'booking_additional_notes' => $additionalnotes, 
+                'booking_total' => $grandtotal, 
+                'booking_remaining' => $grandtotal, 
+                'booking_checkin' => $checkin, 
+                'booking_checkout' => $checkout, 
+                'booking_nights' => $stay, 
+                'booking_adults' => $adults, 
+                'booking_child' => $child,
+                'booking_deposit' => $deposit, 
+                'booking_tax' => $tax, 
+                'booking_paymethod_tax' => $paymethodfee, 
+                'booking_extras_total_fee' => $extrasTotalFee, 
+                'booking_curr_code' => $currCode, 
+                'booking_curr_symbol' => $currSymbol, 
+                'booking_extra_beds' => $extrabeds, 
+                'booking_extra_beds_charges' => $extrabedscharges, 
+                'booking_coupon_rate' => $couponRate, 
+                'booking_coupon' => $couponCode, 
+                'booking_guest_info' => $passportInfo
+            );
 
             $this->db->insert('pt_bookings', $data);
             $bookid = $this->db->insert_id();  
