@@ -191,11 +191,11 @@ class Home extends MX_Controller {
                     $this->load->helper("Tours/tours_front");
                     $this->load->model('Tours/Tours_model');
                 }
-                 if (isModuleActive('Tour Golf')){
+                 if (isModuleActive('Tour Golf') || isModuleActive('Golf Booking')){
                     $activeModules[] = "tour_golf";
                     $this->load->library('Tours/Tours_lib');
                     $this->data['defaultGolfToursListForSearchField'] = $this->Tours_lib->getDefaultGolfToursListForSearchField();
-                   
+                    $this->data['defaultGolfBookingListForSearchField'] = $this->Tours_lib->getDefaultGolfBookingListForSearchField();
                 }
                 if (isModuleActive('rentals')) {
                     $activeModules[] = "rentals";

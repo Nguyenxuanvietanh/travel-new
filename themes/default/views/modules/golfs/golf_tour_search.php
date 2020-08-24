@@ -96,8 +96,8 @@
             </div>
         </div>
     </div>
-    <input type="hidden" name="searching_gt" class="searching_gt" value="<?php echo $_GET['searching_gt']; ?>">
-    <input type="hidden" class="modType_gt" name="modType_gt" value="<?php echo $_GET['modType_gt']; ?>">
+    <input type="hidden" name="searching" class="searching_gt" value="<?php echo $_GET['searching_gt']; ?>">
+    <input type="hidden" class="modType_gt" name="modType" value="<?php echo $_GET['modType_gt']; ?>">
     <script>
         $(function () {
             $(".locationlist_gt<?php echo $module; ?>").select2({

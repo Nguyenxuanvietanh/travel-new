@@ -160,6 +160,39 @@ class Tours_lib {
 
       return json_encode($resultin_array);
   }
+  public function getDefaultGolfBookingListForSearchField()
+  { 
+      $holes = $this->db->select('id, hole')->get('pt_golf_holes')->result();
+      $locations = $this->db->select('id, location')->get('pt_golf_locations')->result();
+      $times = $this->db->select('id, time')->get('pt_golf_times')->result();
+      $resultin_array = [
+        'holes' =>["text" => "Holes", "children" => $holes],
+        'locations' =>["text" => "Locations", "children" => $locations],
+        'times' =>["text" => "Times", "children" => $times],
+          // ["text" => "Locations", "children" => $locations]
+      ];
+
+      return $resultin_array;
+  }
+   public function getGolfAttribute($id,$type)
+  { 
+      if($type == 'location'){
+         $data = $this->db->select('id, location')->where('id',$id)->get('pt_golf_locations')->result();
+      }
+      if($type == 'hole'){
+         $data = $this->db->select('id, hole')->where('id',$id)->get('pt_golf_holes')->result();
+      }
+      
+     if($type == 'time'){
+          $data = $this->db->select('id, time')->where('id',$id)->get('pt_golf_times')->result();
+      }
+     
+      $resultin_array = [
+        'data' => $data,
+      ];
+
+      return $resultin_array;
+  }
   function set_tourid($tourslug) {
     $this->db->select('tour_id');
     $this->db->where('tour_slug', $tourslug);

@@ -321,7 +321,28 @@ class Tours extends MX_Controller {
 
         $this->theme->view('modules/tours/standard/listing', $this->data, $this);
     }
+    function search_golf_booking(){
+        if($this->session->userdata['pt_logged_customer']){
+            $user_id = $this->session->userdata['pt_logged_customer'];
+            $this->load->model('Admin/Accounts_model');
+            $this->data['profile'] = $this->Accounts_model->get_profile_details($user_id);
+        }
+        $prs = $this->input->get();
+        $id_tour = $params['slug'];
+        $this->data['params'] = $prs;
+       
+        $this->load->library('currconverter');
+        $this->lang->load("front", $this->data['lang_set']);
+        $this->data['curr']   = $this->currconverter;
+        $this->data['golf_location'] = $this->Tours_lib->getGolfAttribute($prs['location'],'location');
+        $this->data['golf_hole'] = $this->Tours_lib->getGolfAttribute($prs['hole_id'],'hole');
+        $this->data['golf_time'] = $this->Tours_lib->getGolfAttribute($prs['time_id'],'time');
+        $this->data['module'] = $this->Tours_lib->tour_details($id_tour);
+        $this->data['appModule'] = 'golf_booking';
+        $this->setMetaData($this->data['module']->title, $this->data['module']->metadesc, $this->data['module']->keywords);
 
+        $this->theme->view('booking', $this->data, $this);
+    }
     function search($country = null, $city = null, $citycode = null, $offset = null) {
 
         $checkout = $this->input->get('checkout');

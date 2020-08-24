@@ -680,6 +680,54 @@
                                         </div>
                                     </div>
                                 <?php } ?>
+                                 <?php if($appModule == "golf_booking"){ ?>
+                                    <div class="bg-white-shadow pt-25 ph-30 pb-40 sticky-kit sidebar-wrapper">
+                                    <h4><?php echo trans('0558');?></h4>
+                                    <div class="clear"></div>
+                                    <hr class="mt-0">
+                                    <div class="row">
+                                  
+                                        <div class="col-md-6 text-left">
+                                            Location: 
+                                        </div>
+                                        <div class="col-md-6 text-right">
+                                            <?php echo $golf_location['data'][0]->location; ?>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-md-6 text-left">
+                                            Hole: 
+                                        </div>
+                                        <div class="col-md-6 text-right">
+                                            <?php echo $golf_hole['data'][0]->hole; ?>
+                                        </div>
+                                    </div>
+                                      <div class="row">
+                                        <div class="col-md-6 text-left">
+                                            Date: 
+                                        </div>
+                                        <div class="col-md-6 text-right">
+                                            <?php echo $params['startDate']; ?>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-md-6 text-left">
+                                            Time: 
+                                        </div>
+                                        <div class="col-md-6 text-right">
+                                            <?php echo $golf_time['data'][0]->time; ?>
+                                        </div>
+                                    </div>
+                                     <div class="row">
+                                        <div class="col-md-6 text-left">
+                                            Number of players: 
+                                        </div>
+                                        <div class="col-md-6 text-right">
+                                            <?php echo $params['finfant']; ?>
+                                        </div>
+                                    </div>
+                                     
+                                <?php } ?>
                                 <!--  *****************************************************  -->
                                 <!--                      HOTELS MODULE                      -->
                                 <!--  *****************************************************  -->

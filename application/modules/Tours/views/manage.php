@@ -19,7 +19,7 @@
         if ($.trim(response) != "done") {
           $(".output").html(response);
         } else {
-          window.location.href = "<?php echo base_url().$adminsegment." / tours / "?>";
+          window.location.href = "<?php echo base_url().$adminsegment."/tours/"?>";
         }
       });
     })
