@@ -293,6 +293,23 @@
                     <span><?php echo $invoice->checkout; ?></span>
                     </li> -->
               </ul>
+              <?php if(isset($invoice->subItem->golf) && $invoice->subItem->golf){ ?>
+                <hr class="mb-30 mt-30" />
+                <ul class="confirmation-list">
+                  <li class="clearfix">
+                    <span class="font-weight-bold">Golf hole</span>
+                    <span><?php echo $invoice->subItem->golf->golf_hole; ?></span>
+                  </li>
+                  <li class="clearfix">
+                    <span class="font-weight-bold">Golf location</span>
+                    <span><?php echo $invoice->subItem->golf->golf_location; ?></span>
+                  </li>
+                  <li class="clearfix">
+                    <span class="font-weight-bold">Golf time</span>
+                    <span><?php echo $invoice->subItem->golf->golf_time; ?></span>
+                  </li>
+                </ul>
+              <?php } ?>
               <div class="mb-40"></div>
               <h3 class="heading-title"><span>Charge</span></h3>
               <ul class="confirmation-list">

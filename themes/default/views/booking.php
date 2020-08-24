@@ -168,6 +168,15 @@
                                                     <input type="hidden" name="children" value="<?php echo $module->children;?>" />
                                                     <input type="hidden" name="checkin" value="<?php echo $module->date;?>" />
                                                     <input type="hidden" name="infant" value="<?php echo $module->infants;?>" />
+                                                    <input type="hidden" name="type" value="<?php echo $module->type;?>" />
+                                                    <?php if($module->type != 1){ ?>
+                                                        <input type="hidden" name="golf_hole_id" value="<?php echo $module->golf_hole_id;?>" />
+                                                        <input type="hidden" name="golf_location_id" value="<?php echo $module->golf_location_id;?>" />
+                                                        <input type="hidden" name="golf_time_id" value="<?php echo $module->golf_time_id;?>" />
+                                                        <input type="hidden" name="golf_hole" value="<?php echo $module->golf_hole;?>" />
+                                                        <input type="hidden" name="golf_location" value="<?php echo $module->golf_location;?>" />
+                                                        <input type="hidden" name="golf_time" value="<?php echo $module->golf_time;?>" />
+                                                    <?php } ?>
                                                 <?php }
                                             } ?>
                                             <?php if($appModule == "rentals"){ ?>

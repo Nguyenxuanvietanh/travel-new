@@ -1305,12 +1305,7 @@ class Tours_lib {
     return $result;
   }
 //get updated values of booking data after extras and payment method updates
-  function getUpdatedDataBookResultObject($params) {
-    $tourid = $params['tourid'];
-    $adults = $params['adults'];
-    $child  = $params['child'];
-    $infant = $params['infant'];
-    $extras = $params['extras'];
+  function getUpdatedDataBookResultObject($tourid, $adults,$child,$infant,$extras) {
     $this->ci->load->library('currconverter');
     $result = array();
     $curr = $this->ci->currconverter;
