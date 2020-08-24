@@ -1062,6 +1062,10 @@ class Bookings_model extends CI_Model {
             $this->load->library('Cars/Cars_lib');
             $bookingData = json_decode($this->Cars_lib->getUpdatedDataBookResultObject($itemid,$extras,$pickup,$drop,$pickupdate,$dropdate));
             $error = false;
+        }elseif($bookingtype == "golf_booking"){
+            echo '<pre>';
+            print_r($this->input->post());
+            echo '</pre>';die;
         }
 
         $grandtotal = $this->currconverter->removeComma($bookingData->grandTotal);

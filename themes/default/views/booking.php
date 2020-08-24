@@ -179,6 +179,14 @@
                                                     <?php } ?>
                                                 <?php }
                                             } ?>
+                                            <?php if($appModule == "golf_booking"){ ?>
+                                                <input type="hidden" name="golf_location_id" value="<?php echo $golf_location['data'][0]->id; ?>" />
+                                                <input type="hidden" name="golf_location" value="<?php echo $golf_location['data'][0]->location; ?>" />
+                                                <input type="hidden" name="golf_hole_id" value="<?php echo $golf_hole['data'][0]->id; ?>" />
+                                                <input type="hidden" name="golf_hole" value="<?php echo $golf_hole['data'][0]->hole; ?>" />
+                                                <input type="hidden" name="golf_time_id" value="<?php echo $golf_time['data'][0]->id; ?>" />
+                                                <input type="hidden" name="golf_time" value="<?php echo $golf_time['data'][0]->time; ?>" />
+                                            <?php } ?>
                                             <?php if($appModule == "rentals"){ ?>
                                                 <?php if (!empty($module->duration)) { ?>
                                                     <input type="hidden" name="code" id="code" value="<?php echo $module->code; ?>"/>
