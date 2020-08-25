@@ -140,6 +140,7 @@ class Tours extends MX_Controller {
                 $this->data['params']['golf_time'] = $this->Tours_lib->getGolfAttribute($this->data['params']['time_id'],'time');
 
             }
+
             $this->data['checkin'] = $this->Tours_lib->date;
 
             $this->data['adults'] = $this->Tours_lib->adults;
@@ -334,17 +335,17 @@ class Tours extends MX_Controller {
             $this->load->model('Admin/Accounts_model');
             $this->data['profile'] = $this->Accounts_model->get_profile_details($user_id);
         }
-        $prs = $this->input->get();
-        $id_tour = $params['slug'];
-        $this->data['params'] = $prs;
-       
+
+        $params = $this->input->post();
+        $id_tour = $params['id'];
+        $this->data['module'] = $this->Tours_lib->tour_details($id_tour);
+        $this->data['params'] = $params;
+        // echo '<pre>';
+        // print_r($this->data['module'] );
+        // echo '</pre>';die;
         $this->load->library('currconverter');
         $this->lang->load("front", $this->data['lang_set']);
         $this->data['curr']   = $this->currconverter;
-        $this->data['golf_location'] = $this->Tours_lib->getGolfAttribute($prs['location'],'location');
-        $this->data['golf_hole'] = $this->Tours_lib->getGolfAttribute($prs['hole_id'],'hole');
-        $this->data['golf_time'] = $this->Tours_lib->getGolfAttribute($prs['time_id'],'time');
-        $this->data['module'] = $this->Tours_lib->tour_details($id_tour);
         $this->data['appModule'] = 'golf_booking';
         $this->setMetaData($this->data['module']->title, $this->data['module']->metadesc, $this->data['module']->keywords);
 
@@ -462,7 +463,8 @@ class Tours extends MX_Controller {
 
         $this->theme->view('modules/tours/standard/listing', $this->data, $this);
     }
-function search_golf_booking($country = null, $city = null, $citycode = null, $offset = null) {
+
+    function search_golf_booking($country = null, $city = null, $citycode = null, $offset = null) {
 
         $checkout = $this->input->get('checkout');
 
@@ -494,10 +496,7 @@ function search_golf_booking($country = null, $city = null, $citycode = null, $o
             $city = url_title($locationInfo->city, 'dash', true);
 
             $cityid = $locationInfo->id;
-// echo "<pre>";
-// print_r('tours/search/' . $country . '/' . $city . '/' . $cityid . '?' . $surl);
-// echo "</pre>";
-// exit();
+
             if (!empty($cityid) && $modType == "location") {
                 redirect('tours/search/' . $country . '/' . $city . '/' . $cityid . '?' . $surl);
             } else if (!empty($cityid) && $modType == "tour") {
@@ -577,8 +576,9 @@ function search_golf_booking($country = null, $city = null, $citycode = null, $o
 
         $this->theme->view('modules/tours/standard/listing', $this->data, $this);
     }
-    function book($tourslug) {
 
+    function book($tourslug) {
+        
         $this->load->model('Admin/Countries_model');
 
         $this->data['allcountries'] = $this->Countries_model->get_all_countries();

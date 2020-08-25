@@ -973,7 +973,13 @@ $this->db->join('pt_tour_images','pt_tours.tour_id = pt_tour_images.timg_tour_id
             $this->db->where('item_id',$id);
             return $this->db->get('pt_tours_translation')->result();
 
+		}
+		
+		function get_order_detail($id){
+            $this->db->where('booking_id', $id);
+            return $this->db->get('pt_bookings')->result();
         }
+
 
          function tourGallery($slug){
 

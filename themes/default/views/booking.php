@@ -143,7 +143,11 @@
                                             <!-- End Complete This booking button only -->
                                             <input type="hidden" id="itemid" name="itemid" value="<?php echo $module->id;?>" />
                                             <input type="hidden" name="checkout" value="<?php echo $module->checkout;?>" />
+                                            <?php if($appModule != "golf_booking"){ ?>
                                             <input type="hidden" name="adults" value="<?php echo $module->adults;?>" />
+                                            <?php }else{ ?>
+                                                <input type="hidden" name="adults" value="<?php echo $params['adults'];?>" />
+                                            <?php } ?>
                                             <input type="hidden" id="couponid" name="couponid" value="" />
                                             <input type="hidden" id="btype" name="btype" value="<?php echo $appModule;?>" />
                                             <input type="hidden" name="tourType" id="tourType" value="<?php echo $module->tourType; ?>"/>
@@ -180,12 +184,13 @@
                                                 <?php }
                                             } ?>
                                             <?php if($appModule == "golf_booking"){ ?>
-                                                <input type="hidden" name="golf_location_id" value="<?php echo $golf_location['data'][0]->id; ?>" />
-                                                <input type="hidden" name="golf_location" value="<?php echo $golf_location['data'][0]->location; ?>" />
-                                                <input type="hidden" name="golf_hole_id" value="<?php echo $golf_hole['data'][0]->id; ?>" />
-                                                <input type="hidden" name="golf_hole" value="<?php echo $golf_hole['data'][0]->hole; ?>" />
-                                                <input type="hidden" name="golf_time_id" value="<?php echo $golf_time['data'][0]->id; ?>" />
-                                                <input type="hidden" name="golf_time" value="<?php echo $golf_time['data'][0]->time; ?>" />
+                                                <input type="hidden" name="adults_price" value="<?php echo $module->adultPrice;?>" />
+                                                <input type="hidden" name="golf_hole_id" value="<?php echo $params['golf_hole_id'];?>" />
+                                                <input type="hidden" name="golf_location_id" value="<?php echo $params['golf_location_id'];?>" />
+                                                <input type="hidden" name="golf_time_id" value="<?php echo $params['golf_time_id'];?>" />
+                                                <input type="hidden" name="golf_hole" value="<?php echo $params['golf_hole'];?>" />
+                                                <input type="hidden" name="golf_location" value="<?php echo $params['golf_location'];?>" />
+                                                <input type="hidden" name="golf_time" value="<?php echo $params['golf_time'];?>" />
                                             <?php } ?>
                                             <?php if($appModule == "rentals"){ ?>
                                                 <?php if (!empty($module->duration)) { ?>
@@ -699,7 +704,7 @@
                                             Location: 
                                         </div>
                                         <div class="col-md-6 text-right">
-                                            <?php echo $golf_location['data'][0]->location; ?>
+                                            <?php echo $params['golf_location']; ?>
                                         </div>
                                     </div>
                                     <div class="row">
@@ -707,7 +712,7 @@
                                             Hole: 
                                         </div>
                                         <div class="col-md-6 text-right">
-                                            <?php echo $golf_hole['data'][0]->hole; ?>
+                                            <?php echo $params['golf_hole']; ?>
                                         </div>
                                     </div>
                                       <div class="row">
@@ -715,7 +720,7 @@
                                             Date: 
                                         </div>
                                         <div class="col-md-6 text-right">
-                                            <?php echo $params['startDate']; ?>
+                                            <?php echo $params['date']; ?>
                                         </div>
                                     </div>
                                     <div class="row">
@@ -723,18 +728,29 @@
                                             Time: 
                                         </div>
                                         <div class="col-md-6 text-right">
-                                            <?php echo $golf_time['data'][0]->time; ?>
+                                            <?php echo $params['golf_time']; ?>
                                         </div>
                                     </div>
                                      <div class="row">
                                         <div class="col-md-6 text-left">
-                                            Number of players: 
+                                            Price: 
                                         </div>
                                         <div class="col-md-6 text-right">
-                                            <?php echo $params['finfant']; ?>
+                                            <?php echo $module->adultPrice; ?>
                                         </div>
                                     </div>
-                                     
+                                    <div class="row">
+                                        <div class="col-md-6 text-left">
+                                            Players: 
+                                        </div>
+                                        <div class="col-md-6 text-right">
+                                            <?php echo $params['adults']; ?>
+                                        </div>
+                                    </div>
+                                    <hr>
+                                    <h4 class="well well-sm text-center strong" style="margin-top: 4px; line-height: 20px;"> 
+                                        Total <span style="color:#333333;" class="totalCost"> <?php echo $curr->code; ?>  <?php echo $curr->symbol; ?><strong class="total" style="color: red"><?php echo $module->adultPrice * $params['adults']; ?></strong></span>
+                                    </h4>
                                 <?php } ?>
                                 <!--  *****************************************************  -->
                                 <!--                      HOTELS MODULE                      -->

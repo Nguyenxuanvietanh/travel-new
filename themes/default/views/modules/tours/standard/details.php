@@ -150,7 +150,7 @@
                                             </div>
                                         </div>
                                     </form>
-                                    <form  action="<?php echo base_url().$appModule;?>/confirm_golf_booking/?<?php echo $params['query']; ?>" method="GET" role="search" style="width: 100%">
+                                    <form  action="<?php echo base_url().$appModule;?>/confirm_golf_booking" method="POST" role="search" style="width: 100%">
                                       <div class="row">
                                   
                                         <div class="col-md-6 text-left">
@@ -166,7 +166,7 @@
                                             Hole: 
                                         </div>
                                         <div class="col-md-6 text-right">
-                                            <?php echo $params['golf_hole']['data'][0]->hole; ?>                                  </div>
+                                            <?php echo $params['golf_hole']['data'][0]->hole; ?></div>
                                     </div>
                                      <div class="row">
                                   
@@ -174,7 +174,7 @@
                                             Date: 
                                         </div>
                                         <div class="col-md-6 text-right">
-                                            <?php echo $params['startDate']; ?>                                   </div>
+                                            <?php echo $params['startDate']; ?></div>
                                     </div>
                                      <div class="row">
                                   
@@ -182,17 +182,25 @@
                                             Time: 
                                         </div>
                                         <div class="col-md-6 text-right">
-                                              <?php echo $params['golf_time']['data'][0]->time; ?>                                       </div>
+                                              <?php echo $params['golf_time']['data'][0]->time; ?></div>
                                     </div>
                                     <div class="row">
                                         <div class="col-md-6 text-left">
-                                           players:
+                                           Players:
                                         </div>
                                         <div class="col-md-6 text-right">
-                                             <?php echo $params['finfant']; ?>                                    </div>
+                                        <?php echo $params['finfant']; ?></div>
                                     </div>
-                                       
-                                        <button style="height: 59px; margin: 3px;" type="submit" class="btn btn-secondary btn-block mt-20 btn-action btn-lg loader"><?php echo trans('0142');?></button>
+                                    <input type="hidden" name="id" value="<?php echo $module->id ?>">
+                                    <input type="hidden" name="date" value="<?php echo $params['startDate'] ?>">
+                                    <input type="hidden" name="golf_location_id" value="<?php echo $params['golf_location']['data'][0]->id ?>">
+                                    <input type="hidden" name="golf_location" value="<?php echo $params['golf_location']['data'][0]->location ?>">
+                                    <input type="hidden" name="golf_hole_id" value="<?php echo $params['golf_hole']['data'][0]->id ?>">
+                                    <input type="hidden" name="golf_hole" value="<?php echo $params['golf_hole']['data'][0]->hole ?>">
+                                    <input type="hidden" name="golf_time_id" value="<?php echo $params['golf_time']['data'][0]->id ?>">
+                                    <input type="hidden" name="golf_time" value="<?php echo $params['golf_time']['data'][0]->time ?>">
+                                    <input type="hidden" name="adults" value="<?php echo $params['finfant']; ?>">
+                                    <button style="height: 59px; margin: 3px;" type="submit" class="btn btn-secondary btn-block mt-20 btn-action btn-lg loader"><?php echo trans('0142');?></button>
                                 </div>
                             </form>
                            
