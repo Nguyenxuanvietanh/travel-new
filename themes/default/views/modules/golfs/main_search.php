@@ -26,7 +26,7 @@ $Viator_country = $ci->session->userdata('Viator_country');
                             <div class="form-icon-left typeahead__container">
                                 <span class="icon-font text-muted"><i class="bx bx-map"></i></span>
                         <input type="text" data-module="<?php echo $module; ?>" class="form-control hotelsearch locationlist_gk<?php echo $module; ?>" placeholder="<?php if ($module == 'hotels') { echo trans('026'); } elseif ($module == 'tours') { echo trans('0526'); } ?>" value="<?php echo $toursearch['ToursSearchForm']->from_code; ?>" required>
-                        <input type="hidden" id="txtsearch_gk" name="txtsearch_gk" value="<?php echo $toursearch['ToursSearchForm']->from_code; ?>">
+                        <input type="hidden" id="txtsearch_gk" name="txtsearch" value="<?php echo $toursearch['ToursSearchForm']->from_code; ?>">
                             </div>
                         </div>
                     </div>
@@ -117,7 +117,7 @@ $Viator_country = $ci->session->userdata('Viator_country');
                                         <div class="clear"></div>
                                         <div class="form-icon-left">
                                             <span class="icon-font text-muted"><i class="bx bx-user"></i></span>
-                                            <input type="text" class="form-control touch-spin-03 form-readonly-control" placeholder="0" name="finfant" readonly required />
+                                            <input type="text" class="form-control touch-spin-03 form-readonly-control" placeholder="1" value="1" name="finfant" readonly required />
                                         </div>
                                     </div>
                                 </div>
@@ -128,8 +128,8 @@ $Viator_country = $ci->session->userdata('Viator_country');
                     </div>
                 </div>
             </div>
-            <input type="hidden" name="searching" class="searching" value="<?php echo $_GET['searching']; ?>">
-            <input type="hidden" class="modType" name="modType" value="<?php echo $_GET['modType']; ?>">
+            <input type="hidden" name="searching" class="searching_gk" value="<?php echo $_GET['searching']; ?>">
+            <input type="hidden" class="modType_gk" name="modType" value="<?php echo $_GET['modType']; ?>">
             
         </form>
     </div>

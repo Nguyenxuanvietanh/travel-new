@@ -112,9 +112,16 @@
                 </div>
             </div>
         </div>
+        <?php
+// echo "<pre>";
+// print_r();
+// echo "</pre>";
+// exit();
+         ?>
         <div class="container">
             <div class="row gap-30">
                 <div class="col-12 col-lg-4 col-xl-3 order-lg-last">
+                     <?php if(isset($_GET['location'])): ?>
                     <aside class="sticky-kit sidebar-wrapper">
                         <!--<button class="btn btn-secondary btn-wide btn-toggle collapsed btn-block btn-change-search" data-toggle="collapse" data-target="#change-search"><?=lang('0106')?> <?=lang('012')?></button>-->
                         <div class="booking-selection-box">
@@ -128,6 +135,86 @@
                                       </div>-->
                                 </div>
                             </div>
+                           
+                           
+                            <form action="" method="GET">
+                                <div class="content">
+                                    <form action="" method="GET" id="hello">
+                                        <div class="hotel-room-sm-item">
+                                            <div class="the-hotel-item">
+                                                <div class="row">
+                                                    <div class="col-12">
+                                                       <h6 class="text-center"><?php echo $params['startDate'] ?></h6>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </form>
+                                    <form  action="<?php echo base_url().$appModule;?>/confirm_golf_booking/?<?php echo $params['query']; ?>" method="GET" role="search" style="width: 100%">
+                                      <div class="row">
+                                  
+                                        <div class="col-md-6 text-left">
+                                            Location: 
+                                        </div>
+                                        <div class="col-md-6 text-right">
+                                            <?php echo $params['golf_location']['data'][0]->location; ?>
+                                        </div>
+                                    </div>
+                                     <div class="row">
+                                  
+                                        <div class="col-md-6 text-left">
+                                            Hole: 
+                                        </div>
+                                        <div class="col-md-6 text-right">
+                                            <?php echo $params['golf_hole']['data'][0]->hole; ?>                                  </div>
+                                    </div>
+                                     <div class="row">
+                                  
+                                        <div class="col-md-6 text-left">
+                                            Date: 
+                                        </div>
+                                        <div class="col-md-6 text-right">
+                                            <?php echo $params['startDate']; ?>                                   </div>
+                                    </div>
+                                     <div class="row">
+                                  
+                                        <div class="col-md-6 text-left">
+                                            Time: 
+                                        </div>
+                                        <div class="col-md-6 text-right">
+                                              <?php echo $params['golf_time']['data'][0]->time; ?>                                       </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-md-6 text-left">
+                                           players:
+                                        </div>
+                                        <div class="col-md-6 text-right">
+                                             <?php echo $params['finfant']; ?>                                    </div>
+                                    </div>
+                                       
+                                        <button style="height: 59px; margin: 3px;" type="submit" class="btn btn-secondary btn-block mt-20 btn-action btn-lg loader"><?php echo trans('0142');?></button>
+                                </div>
+                            </form>
+                           
+                        </div>
+                        </form>
+                    </aside>
+                     <?php else: ?>
+                    <aside class="sticky-kit sidebar-wrapper">
+                        <!--<button class="btn btn-secondary btn-wide btn-toggle collapsed btn-block btn-change-search" data-toggle="collapse" data-target="#change-search"><?=lang('0106')?> <?=lang('012')?></button>-->
+                        <div class="booking-selection-box">
+                            <div class="heading clearfix">
+                                <div class="d-flex align-items-end fe">
+                                    <div>
+                                        <h5 class="text-white font-serif font400"><?php echo trans('0463'); ?></h5>
+                                    </div>
+                                    <!--<div class="ml-auto">
+                                      <a href="#" class="booking-selection-filter">reset</a>
+                                      </div>-->
+                                </div>
+                            </div>
+                           
+                           
                             <form action="" method="GET">
                                 <div class="content">
                                     <form action="" method="GET" id="hello">
@@ -207,9 +294,11 @@
                                         <button style="height: 59px; margin: 3px;" type="submit" class="btn btn-secondary btn-block mt-20 btn-action btn-lg loader"><?php echo trans('0142');?></button>
                                 </div>
                             </form>
+                           
                         </div>
                         </form>
                     </aside>
+                    <?php endif; ?>
                 </div>
                 <div class="col-12 col-lg-8 col-xl-9">
                     <div class="content-wrapper">

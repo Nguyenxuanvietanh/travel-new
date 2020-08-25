@@ -132,7 +132,14 @@ class Tours extends MX_Controller {
             }
 
 
+            $this->data['params'] = $_GET;
+            if(isset($this->data['params']['location'])){
+                $this->data['params']['query'] =  http_build_query($this->data['params']);
+                $this->data['params']['golf_location'] = $this->Tours_lib->getGolfAttribute($this->data['params']['location'],'location');
+                $this->data['params']['golf_hole'] = $this->Tours_lib->getGolfAttribute($this->data['params']['hole_id'],'hole');
+                $this->data['params']['golf_time'] = $this->Tours_lib->getGolfAttribute($this->data['params']['time_id'],'time');
 
+            }
             $this->data['checkin'] = $this->Tours_lib->date;
 
             $this->data['adults'] = $this->Tours_lib->adults;
@@ -321,7 +328,7 @@ class Tours extends MX_Controller {
 
         $this->theme->view('modules/tours/standard/listing', $this->data, $this);
     }
-    function search_golf_booking(){
+    function confirm_golf_booking(){
         if($this->session->userdata['pt_logged_customer']){
             $user_id = $this->session->userdata['pt_logged_customer'];
             $this->load->model('Admin/Accounts_model');
@@ -455,7 +462,121 @@ class Tours extends MX_Controller {
 
         $this->theme->view('modules/tours/standard/listing', $this->data, $this);
     }
+function search_golf_booking($country = null, $city = null, $citycode = null, $offset = null) {
 
+        $checkout = $this->input->get('checkout');
+
+        $this->data['adults'] = (int) $this->input->get('adults');
+
+        $this->data['child'] = (int) $this->input->get('child');
+
+        $this->data['checkin'] = $this->input->get('date');
+
+        //$country = $this->input->get('country');
+
+        //$state = $this->input->get('state');
+
+        $this->session->set_userdata('tourseach', $this->input->get());
+
+        $type = $this->input->get('type');
+
+        $cityid = $this->input->get('searching');
+
+        $modType = $this->input->get('modType');
+
+        if (empty($country)) {
+            $surl = http_build_query($_GET);
+
+            $locationInfo = pt_LocationsInfo($cityid);
+
+            $country = url_title($locationInfo->country, 'dash', true);
+
+            $city = url_title($locationInfo->city, 'dash', true);
+
+            $cityid = $locationInfo->id;
+// echo "<pre>";
+// print_r('tours/search/' . $country . '/' . $city . '/' . $cityid . '?' . $surl);
+// echo "</pre>";
+// exit();
+            if (!empty($cityid) && $modType == "location") {
+                redirect('tours/search/' . $country . '/' . $city . '/' . $cityid . '?' . $surl);
+            } else if (!empty($cityid) && $modType == "tour") {
+                $this->Tours_lib->set_id($cityid);
+
+                $this->Tours_lib->tour_short_details();
+
+                $title = $this->Tours_lib->title;
+
+                $slug = $this->Tours_lib->slug;
+
+                if (!empty($title)) {
+                    redirect('tours/' . $slug.'&'.$surl);
+                }
+            }
+        } else {
+
+            if ($modType == "location") {
+                $cityid = $citycode;
+            } else {
+
+                $cityid = "";
+            }
+
+            if (is_numeric($country)) {
+                $offset = $country;
+            }
+        }
+
+        if (array_filter($_GET)) {
+            $alltours = $this->Tours_lib->search_tours($cityid, $offset);
+
+            $this->data['module'] = $alltours['all_tours'];
+
+            $this->data['info'] = $alltours['paginationinfo'];
+        } else {
+
+            $this->data['module'] = array();
+        }
+
+        $this->lang->load("front", $this->data['lang_set']);
+
+        $this->data['city'] = $cityid;
+
+        $this->data['selectedLocation'] = $cityid; //$this->Tours_lib->selectedLocation;
+
+        $this->data['checkin'] = $this->Tours_lib->date;
+
+        $this->data['adults'] = $this->Tours_lib->adults;
+
+        $this->data['child'] = (int) $this->Tours_lib->child;
+
+        $this->data['selectedTourType'] = $this->Tours_lib->selectedTourType;
+
+        $args = $this->session->userdata('tourseach');
+        $this->load->library('Tours/TourSearchForm');
+        $searchForm = new TourSearchForm();
+        if (!empty($args)) {
+            $searchForm->parseUriString($args);
+        }
+        $this->data['ToursSearchForm'] = $searchForm;
+        $this->data['moduleTypes'] = $this->Tours_lib->tourTypes();
+
+        $settings = $this->Settings_model->get_front_settings('tours');
+
+        $this->data['searchText'] = $this->input->get('txtSearch');
+
+        $this->data['minprice'] = $this->Tours_lib->convertAmount($settings[0]->front_search_min_price);
+
+        $this->data['maxprice'] = $this->Tours_lib->convertAmount($settings[0]->front_search_max_price);
+
+        $this->data['currCode'] = $this->Tours_lib->currencycode;
+
+        $this->data['currSign'] = $this->Tours_lib->currencysign;
+
+        $this->setMetaData('Search Results');
+
+        $this->theme->view('modules/tours/standard/listing', $this->data, $this);
+    }
     function book($tourslug) {
 
         $this->load->model('Admin/Countries_model');
