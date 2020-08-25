@@ -180,6 +180,7 @@
                                                 <?php }
                                             } ?>
                                             <?php if($appModule == "golf_booking"){ ?>
+                                                <input type="hidden" name="adults_price" value="<?php echo $module->adultPrice; ?>" />
                                                 <input type="hidden" name="golf_location_id" value="<?php echo $golf_location['data'][0]->id; ?>" />
                                                 <input type="hidden" name="golf_location" value="<?php echo $golf_location['data'][0]->location; ?>" />
                                                 <input type="hidden" name="golf_hole_id" value="<?php echo $golf_hole['data'][0]->id; ?>" />
@@ -688,7 +689,7 @@
                                         </div>
                                     </div>
                                 <?php } ?>
-                                 <?php if($appModule == "golf_booking"){ ?>
+                                <?php if($appModule == "golf_booking"){ ?>
                                     <div class="bg-white-shadow pt-25 ph-30 pb-40 sticky-kit sidebar-wrapper">
                                     <h4><?php echo trans('0558');?></h4>
                                     <div class="clear"></div>
@@ -726,14 +727,28 @@
                                             <?php echo $golf_time['data'][0]->time; ?>
                                         </div>
                                     </div>
-                                     <div class="row">
-                                        <div class="col-md-6 text-left">
-                                            Number of players: 
+                                    <hr />
+                                    <div class="row">
+                                        <div class="col-md-4 text-left">
+                                            Adults: 
                                         </div>
-                                        <div class="col-md-6 text-right">
-                                            <?php echo $params['finfant']; ?>
+                                        <div class="col-md-4 text-center">
+                                            <select style="min-width:50px;height: 35px !important;min-height: 35px !important;" name="adults" class="changeInfo input-sm form-control" id="selectedAdults">
+                                                <?php if($module->maxAdults > 0){ for($i = 1; $i <= $module->maxAdults; $i++){ ?>
+                                                    <option value="<?php echo $i; ?>"><?php echo $i; ?></option>
+                                                <?php }} else { ?>
+                                                    <option value="0>">0</option>
+                                                <?php } ?>
+                                            </select>
+                                        </div>
+                                        <div class="col-md-4 text-right">
+                                            <?php echo $curr->symbol; ?> <span class="golf_booking_total"><?php echo $module->adultPrice; ?></span>
                                         </div>
                                     </div>
+                                    <hr />
+                                    <h4 class="well well-sm text-center strong" style="margin-top: 4px; line-height: 20px;"> 
+                                        Total <span style="color:#333333;" class="totalCost"> <?php echo $curr->code; ?>  <?php echo $curr->symbol; ?><strong class="total" style="color: red"><?php echo $module->adultPrice; ?></strong></span>
+                                    </h4>
                                      
                                 <?php } ?>
                                 <!--  *****************************************************  -->
@@ -1608,5 +1623,20 @@
 </style>
 <?php if($appModule != "ean"){ ?>
     <script src="<?php echo base_url(); ?>assets/js/booking.js"></script>
+<?php } ?>
+<?php if($appModule == 'golf_booking'){ ?>
+    <script>
+        $(function(){
+            $('input[name=adults]').val(1)
+        });
+        $('#selectedAdults').change(function(){
+            let adults = $(this).val()
+            let price = parseInt('<?php echo $module->adultPrice ?>')
+            let total = adults * price;
+            $('span.golf_booking_total').text(total)
+            $('strong.total').text(total)
+            $('input[name=adults]').val(adults)
+        })
+    </script>
 <?php } ?>
 <div class="clearfix"></div>

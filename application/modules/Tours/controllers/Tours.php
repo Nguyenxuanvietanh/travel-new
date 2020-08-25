@@ -10,7 +10,7 @@ class Tours extends MX_Controller {
 
     function __construct() {
 
-// $this->session->sess_destroy();
+        // $this->session->sess_destroy();
 
         parent::__construct();
 
@@ -328,7 +328,7 @@ class Tours extends MX_Controller {
             $this->data['profile'] = $this->Accounts_model->get_profile_details($user_id);
         }
         $prs = $this->input->get();
-        $id_tour = $params['slug'];
+        $id_tour = $prs['slug'];
         $this->data['params'] = $prs;
        
         $this->load->library('currconverter');
@@ -340,7 +340,6 @@ class Tours extends MX_Controller {
         $this->data['module'] = $this->Tours_lib->tour_details($id_tour);
         $this->data['appModule'] = 'golf_booking';
         $this->setMetaData($this->data['module']->title, $this->data['module']->metadesc, $this->data['module']->keywords);
-
         $this->theme->view('booking', $this->data, $this);
     }
     function search($country = null, $city = null, $citycode = null, $offset = null) {

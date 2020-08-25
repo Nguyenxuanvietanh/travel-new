@@ -35,6 +35,11 @@ class Tours_model extends CI_Model {
 				return $this->db->get('pt_tours')->result();
 		}
 
+		function get_order_detail($id){
+			$this->db->where('booking_id', $id);
+			return $this->db->get('pt_bookings')->result();
+		}
+
 		// Get all tours for extras
 		function all_tours($id = null) {
 				$this->db->select('tour_id as id,tour_title as title');

@@ -1062,10 +1062,6 @@ class Bookings_model extends CI_Model {
             $this->load->library('Cars/Cars_lib');
             $bookingData = json_decode($this->Cars_lib->getUpdatedDataBookResultObject($itemid,$extras,$pickup,$drop,$pickupdate,$dropdate));
             $error = false;
-        }elseif($bookingtype == "golf_booking"){
-            echo '<pre>';
-            print_r($this->input->post());
-            echo '</pre>';die;
         }
 
         $grandtotal = $this->currconverter->removeComma($bookingData->grandTotal);
@@ -1121,6 +1117,24 @@ class Bookings_model extends CI_Model {
             $currSymbol = $curr->symbol;
             $adults = 1;
             $error = false;
+        }elseif($bookingtype == "golf_booking"){
+            $sub_item = [
+                'golf_location_id' => $this->input->post('golf_location_id'),
+                'golf_location' => $this->input->post('golf_location'),
+                'golf_hole_id' => $this->input->post('golf_hole_id'),
+                'golf_hole' => $this->input->post('golf_hole'),
+                'golf_time_id' => $this->input->post('golf_time_id'),
+                'golf_time' => $this->input->post('golf_time')
+            ];
+            $subitem = json_encode($sub_item);
+            $itemid = $this->input->post('itemid');
+            $checkin = date("Y-m-d");
+            $checkout = date("Y-m-d");
+            $curr = $this->currconverter;
+            $currCode = $curr->code;
+            $currSymbol = $curr->symbol;
+            $grandtotal = $adults * $this->input->post('adults_price');
+            $error = false;
         }
         if (!$error) {
             $data = array(
@@ -1156,7 +1170,6 @@ class Bookings_model extends CI_Model {
 
             $this->db->insert('pt_bookings', $data);
             $bookid = $this->db->insert_id();  
-
             $this->session->set_userdata("BOOKING_ID", $bookid);
             $this->session->set_userdata("REF_NO", $refno);
 

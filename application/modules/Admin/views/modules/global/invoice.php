@@ -65,7 +65,7 @@
   <div class="main-wrapper scrollspy-action">
     <div class="page-wrapper page-confirmation bg-light">
       <div class="container">
-        <?php if($invoice->module != 'pass'){ include 'pay.php'; } ?>
+        <?php if($invoice->module != 'pass' && $invoice->module != 'golf_booking'){ include 'pay.php'; } ?>
         <?php if ($invoice->status == "unpaid") { if (time() < $invoice->expiryUnixtime) { ?>
         <div class="success-box unpaid">
           <div class="icon">
@@ -741,6 +741,49 @@
                     <span class="font-weight-bold"><?=lang('0124')?></span>
                     <span class="text-main text-secondary"><?php echo $invoice->currCode; ?>
                       <?php echo $invoice->currSymbol; ?><?php echo str_replace(".00","",number_format($item->total,2));?></span>
+                  </li>
+                </ul>
+              </aside>
+              <?php } ?>
+
+              <?php if($invoice->module == "golf_booking"){ ?>
+              <aside class="sidebar-wrapper pt-30 pb-30 bg-white-shadow">
+                <h3 class="heading-title"><span><?=lang('039')?></span></h3>
+                <hr class="mb-30 mt-30" />
+                <ul class="confirmation-list">
+                  <li class="clearfix">
+                    <span class="font-weight-bold"> Location</span>
+                    <span><?php echo $subitem->golf_location; ?></span>
+                  </li>
+                  <li class="clearfix">
+                    <span class="font-weight-bold"> Hole</span>
+                    <span><?php echo $subitem->golf_hole; ?></span>
+                  </li>
+                  <li class="clearfix">
+                    <span class="font-weight-bold"> Time</span>
+                    <span><?php echo $subitem->golf_time; ?></span>
+                  </li>
+                </ul>
+                <div class="mb-40"></div>
+                <h3 class="heading-title"><span>Charge</span></h3>
+                <ul class="confirmation-list">
+                  <li class="clearfix">
+                    <span class="font-weight-bold">
+                      <?=lang('0126')?>
+                      <!--(2)-->:
+                    </span>
+                    <span> <?php echo $invoice->currCode; ?>
+                      <?php echo $invoice->currSymbol; ?><?php echo str_replace(".00","",number_format($invoice->checkoutAmount,2)); ?></span>
+                  </li>
+                  <li class="clearfix">
+                    <span class="font-weight-bold"><?=lang('0153')?>:</span>
+                    <span><?php echo $invoice->currCode; ?>
+                      <?php echo $invoice->currSymbol; ?><?php echo str_replace(".00","",number_format($invoice->tax,2));?></span>
+                  </li>
+                  <li class="clearfix total">
+                    <span class="font-weight-bold"><?=lang('0124')?></span>
+                    <span class="text-main text-secondary"><?php echo $invoice->currCode; ?>
+                      <?php echo $invoice->currSymbol; ?><?php echo str_replace(".00","",number_format($item->booking_total,2));?></span>
                   </li>
                 </ul>
               </aside>

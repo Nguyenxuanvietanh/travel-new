@@ -158,14 +158,19 @@ class Invoice extends MX_Controller {
               $flight_data = $this->Flights_model->get_flights_data($this->data['invoice']->bookingID,$this->data['invoice']->itemid);
               $this->data['flight_data'] = $flight_data[1];
               $this->data['item'] = $flight_data[0];
-          }
-
-          elseif($this->data['invoice']->module == "pass"){
+          }elseif($this->data['invoice']->module == "pass"){
             $this->load->library('currconverter');
             $this->data['curr'] = $this->currconverter;
             $this->load->model('Pass/Pass_model');
             $this->data['item'] = $this->Pass_model->get_order_detail($this->data['invoice']->bookingID)[0];
+          }elseif($this->data['invoice']->module == "golf_booking"){
+            $this->load->library('currconverter');
+            $this->data['curr'] = $this->currconverter;
+            $this->load->model('Tours/Tours_model');
+            $this->data['item'] = $this->Tours_model->get_order_detail($this->data['invoice']->bookingID)[0];
+            $this->data['subitem'] = json_decode($this->data['item']->booking_subitem);
           }
+
           $this->theme->view('Admin/modules/global/invoice', $this->data, $this);
        // $this->load->view('Admin/modules/global/invoice', $this->data);
         }
